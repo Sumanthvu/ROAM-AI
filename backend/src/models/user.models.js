@@ -14,7 +14,7 @@ const tripSchema = new mongoose.Schema(
 
 const userSchema = new mongoose.Schema(
   {
-    username: {
+    userName: {
       type: String,
       unique:true,
       required: true,
