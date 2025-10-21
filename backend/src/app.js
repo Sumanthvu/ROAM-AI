@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import session from "express-session"
 
 const app = express();
 
@@ -32,6 +33,20 @@ app.use(express.static("public"));
 //cookie-parser
 //it lets the express app to read and understand the cookies coming along with the data or user requests
 app.use(cookieParser());
+
+
+
+app.use(
+    session({
+        secret:process.env.SESSION_SECRET,
+        resave:false,
+        saveUninitialized:false,
+        cookie:{
+            maxAge:10*60*1000,
+            httpOnly:true
+        }
+    })
+)
 
 
 

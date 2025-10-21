@@ -6,150 +6,360 @@ import jwt from "jsonwebtoken";
 import { asyncHandler } from "../utils/AsyncHandler.js";
 import transporter from "../config/nodemailer.js";
 import { sendEmail } from "../config/sendMail.js";
+import bcrypt from "bcrypt";
 
 const generateOtp = () =>
   Math.floor(100000 + Math.random() * 900000).toString();
 
-const registerUser = asyncHandler(async (req, res) => {
+// const registerUser = asyncHandler(async (req, res) => {
+//   const { userName, email, password } = req.body;
+
+//   if (
+//     !userName ||
+//     !email ||
+//     !password ||
+//     [userName, email, password].some((field) => field.trim() === "")
+//   ) {
+//     throw new ApiError(400, "All fields are required");
+//   }
+
+//   let user = await User.findOne({ $or: [{ userName }, { email }] });
+
+//   if (user && user.isEmailVerified) {
+//     throw new ApiError(409, "User with this email already exists");
+//   }
+
+//   if (!user) {
+//     user = new User({ userName, email });
+//   }
+
+//   //   console.log(req.files);
+
+//   let profilePictureUrl = "";
+//   if (
+//     req.files &&
+//     Array.isArray(req.files.avatar) &&
+//     req.files.avatar.length > 0
+//   ) {
+//     const avatarLocalPath = req.files.avatar[0].path;
+//     const avatar = await uploadOnCloudinary(avatarLocalPath);
+//     if (!avatar || !avatar.url) {
+//       throw new ApiError(500, "Failed to upload avatar to Cloudinary");
+//     }
+//     profilePictureUrl = avatar.url;
+//   }
+
+//   const otp = generateOtp();
+//   const otpExpires = new Date(Date.now() + 10 * 60 * 1000);
+
+//   user.userName = userName;
+//   user.password = password;
+//   if (profilePictureUrl) {
+//     user.profilePicture = profilePictureUrl;
+//   }
+//   user.emailVerificationOtp = otp;
+//   user.emailVerificationOtpExpires = otpExpires;
+//   user.isEmailVerified = false;
+
+//   await user.save();
+
+//   const emailSubject = "Verify Your Email Address";
+//   const emailMessage = `<p>Your OTP for email verification is: <strong>${otp}</strong>. It is valid for 10 minutes.</p>`;
+
+//   try {
+//     await sendEmail(email, emailSubject, emailMessage);
+//     return res
+//       .status(201)
+//       .json(
+//         new ApiResponse(
+//           201,
+//           { userId: user._id },
+//           "OTP sent to your email. Please verify."
+//         )
+//       );
+//   } catch (error) {
+//     // await User.findByIdAndDelete(user._id)
+//     throw new ApiError(
+//       500,
+//       "Failed to send verification email. Please try registering again."
+//     );
+//   }
+// });
+
+// const verifyOtp = asyncHandler(async (req, res) => {
+//   const { email, otp } = req.body;
+
+//   if (!email || !otp) {
+//     throw new ApiError(400, "Email and otp are required");
+//   }
+
+//   const user = await User.findOne({
+//     email,
+//     emailVerificationOtp: otp,
+//     emailVerificationOtpExpires: {
+//       $gt: Date.now(),
+//     },
+//   });
+
+//   if (!user) {
+//     throw new ApiError(400, "Invalid credentials");
+//   }
+
+//   user.isEmailVerified = true;
+//   user.emailVerificationOtp = undefined;
+//   user.emailVerificationOtpExpires = undefined;
+//   await user.save();
+
+//   return res
+//     .status(200)
+//     .json(
+//       new ApiResponse(
+//         200,
+//         { verified: true },
+//         "User mail id verified succcessfully"
+//       )
+//     );
+// });
+
+// A new function to handle the first step of registration
+
+// const resendOtp = asyncHandler(async (req, res) => {
+//   const { email } = req.body;
+
+//   if (!email) {
+//     throw new ApiError(400, "Email is required");
+//   }
+
+//   const user = await User.findOne({ email });
+
+//   if (!user) {
+//     throw new ApiError(404, "User not found");
+//   }
+
+//   if (user.isEmailVerified) {
+//     throw new ApiError(401, "Email is already verified");
+//   }
+
+//   const otp = generateOtp();
+//   const otpExpires = new Date(Date.now() + 10 * 60 * 1000);
+
+//   user.emailVerificationOtp = otp;
+//   user.emailVerificationOtpExpires = otpExpires;
+
+//   await user.save();
+
+//   const emailSubject = "Resend: Verify your email address";
+//   const emailMessage = `<p>Your new OTP for email verification is: <strong>${otp}</strong>. It is valid for 10 minutes.</p>`;
+
+//   try {
+//     await sendEmail(email, emailSubject, emailMessage);
+//     return res
+//       .status(200)
+//       .json(new ApiResponse(200, {}, "A new OTP has been sent to your email."));
+//   } catch (error) {
+//     throw new ApiError(
+//       500,
+//       "Failed to resend verification email.Please try again later"
+//     );
+//   }
+// });
+// const sendOtpForRegistration = asyncHandler(async (req, res) => {
+//   const { userName, email, password } = req.body;
+
+//   if (
+//     !userName ||
+//     !email ||
+//     !password ||
+//     [userName, email, password].some((field) => field.trim() === "")
+//   ) {
+//     throw new ApiError(400, "All fields are required");
+//   }
+//   const existingUser = await User.findOne({
+//     $or: [{ email }, { userName }],
+//     isEmailVerified: true,
+//   });
+
+//   if (existingUser) {
+//     throw new ApiError(409, "User with this email or username already exists");
+//   }
+
+//   const hashedPassword = await bcrypt.hash(password, 10);
+
+//   let profilePictureUrl = "";
+//   if (
+//     req.files &&
+//     Array.isArray(req.files.avatar) &&
+//     req.files.avatar.length > 0
+//   ) {
+//     const avatarLocalPath = req.files.avatar[0].path;
+//     const avatar = await uploadOnCloudinary(avatarLocalPath);
+//     if (!avatar || !avatar.url) {
+//       throw new ApiError(500, "Failed to upload avatar to Cloudinary");
+//     }
+//     profilePictureUrl = avatar.url;
+//   }
+
+//   const otp = generateOtp();
+
+//   const registrationPayload = {
+//     userName,
+//     email,
+//     password: hashedPassword,
+//     avatar: profilePictureUrl,
+//     otp,
+//   };
+
+//   const registrationToken = jwt.sign(
+//     registrationPayload,
+//     process.env.REGISTRATION_TOKEN_SECRET,
+//     { expiresIn: "10m" }
+//   );
+
+//   const emailSubject = "Verify Your Email Address";
+//   const emailMessage = `<p>Your OTP for email verification is: <strong>${otp}</strong>. It is valid for 10 minutes.</p>`;
+
+//   try {
+//     await sendEmail(email, emailSubject, emailMessage);
+//     return res
+//       .status(200)
+//       .json(
+//         new ApiResponse(
+//           200,
+//           { registrationToken },
+//           "OTP sent to your email. Please verify."
+//         )
+//       );
+//   } catch (error) {
+//     throw new ApiError(
+//       500,
+//       "Failed to send verification email. Please try again."
+//     );
+//   }
+// });
+
+// const verifyOtpAndRegister = asyncHandler(async (req, res) => {
+//   const { otp, registrationToken } = req.body;
+
+//   if (!otp || !registrationToken) {
+//     throw new ApiError(400, "OTP and registration token are required");
+//   }
+
+//   let decodedPayload;
+//   try {
+//     decodedPayload = jwt.verify(
+//       registrationToken,
+//       process.env.REGISTRATION_TOKEN_SECRET
+//     );
+//   } catch (error) {
+//     throw new ApiError(401, "Invalid or expired registration token.");
+//   }
+
+//   if (decodedPayload.otp !== otp) {
+//     throw new ApiError(400, "Invalid OTP.");
+//   }
+//   const { userName, email, password, profilePicture } = decodedPayload;
+
+//   const existingUser = await User.findOne({ $or: [{ email }, { userName }] });
+//   if (existingUser) {
+//     throw new ApiError(409, "User with this email or username already exists.");
+//   }
+
+//   const user = await User.create({
+//     userName,
+//     email,
+//     password,
+//     profilePicture,
+//     isEmailVerified: true,
+//   });
+
+//   return res
+//     .status(201)
+//     .json(
+//       new ApiResponse(
+//         201,
+//         { userId: user._id },
+//         "User registered successfully!"
+//       )
+//     );
+// });
+
+const sendOtpForRegistration = asyncHandler(async (req, res) => {
   const { userName, email, password } = req.body;
 
-  if (!userName || !email || !password || [userName, email, password].some(field => field.trim() === "")) {
+  if (!userName || !email || !password) {
     throw new ApiError(400, "All fields are required");
   }
 
+  const existingUser = await User.findOne({ $or: [{ email }, { userName }] });
 
-   let user = await User.findOne({ email });
-
-  if (user && user.isEmailVerified) {
-    throw new ApiError(409, "User with this email already exists");
+  if (existingUser) {
+    throw new ApiError(409, "User with this email or username already exists");
   }
 
-  if (!user) {
-    user = new User({ userName, email });
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+
+  let coverImageLocalPath;
+  if (
+    req.files &&
+    Array.isArray(req.files.coverImage) &&
+    req.files.coverImage.length > 0
+  ) {
+    coverImageLocalPath = req.files.coverImage[0].path;
   }
 
-//   console.log(req.files);
-
-  let profilePictureUrl = "";
-  if (req.files && Array.isArray(req.files.avatar) && req.files.avatar.length > 0) {
-    const avatarLocalPath = req.files.avatar[0].path;
-    const avatar = await uploadOnCloudinary(avatarLocalPath);
-    if (!avatar || !avatar.url) {
-      throw new ApiError(500, "Failed to upload avatar to Cloudinary");
-    }
-    profilePictureUrl = avatar.url;
-  }
+  const coverImage = await uploadOnCloudinary(coverImageLocalPath);
 
   const otp = generateOtp();
-  const otpExpires = new Date(Date.now() + 10 * 60 * 1000);
 
-  user.userName = userName;
-  user.password = password; 
-  if (profilePictureUrl) {
-      user.profilePicture = profilePictureUrl;
-  }
-  user.emailVerificationOtp = otp;
-  user.emailVerificationOtpExpires = otpExpires;
-  user.isEmailVerified = false; 
-
-  await user.save();
-
-  const emailSubject = "Verify Your Email Address";
-  const emailMessage = `<p>Your OTP for email verification is: <strong>${otp}</strong>. It is valid for 10 minutes.</p>`;
-
-  try {
-    await sendEmail(email, emailSubject, emailMessage);
-    return res
-      .status(201)
-      .json(
-        new ApiResponse(
-          201,
-          { userId: user._id },
-          "OTP sent to your email. Please verify."
-        )
-      );
-  } catch (error) {
-    throw new ApiError(
-      500,
-      "Failed to send verification email. Please try registering again."
-    );
-  }
-});
-
-const verifyOtp = asyncHandler(async (req, res) => {
-  const { email, otp } = req.body;
-
-  if (!email || !otp) {
-    throw new ApiError(400, "Email and otp are required");
-  }
-
-  const user = await User.findOne({
+  req.session.registrationData = {
+    userName,
     email,
-    emailVerificationOtp: otp,
-    emailVerificationOtpExpires: {
-      $gt: Date.now(),
-    },
-  });
+    password: hashedPassword,
+    coverImage: coverImage?.url || "",
+    otp,
+  };
 
-  if (!user) {
-    throw new ApiError(400, "Invalid credentials");
-  }
-
-  user.isEmailVerified = true;
-  user.emailVerificationOtp = undefined;
-  user.emailVerificationOtpExpires = undefined;
-  await user.save();
+  await sendEmail(email, "Verify Your Email", `Your OTP is: ${otp}`);
 
   return res
     .status(200)
-    .json(new ApiResponse(200, {verified:true}, "User mail id verified succcessfully"));
+    .json(new ApiResponse(200, {}, "OTP sent successfully."));
 });
 
-const resendOtp = asyncHandler(async (req, res) => {
-  const { email } = req.body;
+const verifyOtpAndRegister = asyncHandler(async (req, res) => {
+  const { otp } = req.body;
 
-  if (!email) {
-    throw new ApiError(400, "Email is required");
+  const registrationData = req.session.registrationData;
+
+  if (!registrationData) {
+    throw new ApiError(400, "Session expired. Please try again.");
   }
 
-  const user = await User.findOne({ email });
-
-  if (!user) {
-    throw new ApiError(404, "User not found");
+  if (registrationData.otp !== otp) {
+    throw new ApiError(400, "Invalid OTP.");
   }
 
-  if (user.isEmailVerified) {
-    throw new ApiError(401, "Email is already verified");
-  }
+  const { userName, email, password, coverImage } = registrationData;
+  const user = await User.create({
+    userName,
+    email,
+    password,
+    coverImage,
+    isEmailVerified: true,
+  });
 
-  const otp = generateOtp();
-  const otpExpires = new Date(Date.now() + 10 * 60 * 1000);
+  req.session.registrationData = null;
 
-  user.emailVerificationOtp = otp;
-  user.emailVerificationOtpExpires = otpExpires;
-
-  await user.save();
-
-  const emailSubject = "Resend: Verify your email address";
-  const emailMessage = `<p>Your new OTP for email verification is: <strong>${otp}</strong>. It is valid for 10 minutes.</p>`;
-
-  try {
-    await sendEmail(email, emailSubject, emailMessage);
-    return res
-      .status(200)
-      .json(
-        new ApiResponse(
-          200,
-          {},
-          "A new OTP has been sent to your email."
-        )
-      );
-  } catch (error) {
-    throw new ApiError(
-      500,
-      "Failed to resend verification email.Please try again later"
+  return res
+    .status(201)
+    .json(
+      new ApiResponse(
+        201,
+        { userId: user._id },
+        "User registered successfully!"
+      )
     );
-  }
 });
 
-export { registerUser, verifyOtp, resendOtp };
+export { sendOtpForRegistration, verifyOtpAndRegister };
