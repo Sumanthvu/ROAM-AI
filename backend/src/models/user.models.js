@@ -14,6 +14,7 @@ const userSchema = new mongoose.Schema(
   {
     username: {
       type: String,
+      unique:true,
       required: true,
     },
     email: {
@@ -27,6 +28,7 @@ const userSchema = new mongoose.Schema(
     },
     profilePicture: {
       type: String,
+      default:""
     },
     isEmailVerified: {
       type: Boolean,
