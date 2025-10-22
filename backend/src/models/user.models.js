@@ -47,6 +47,9 @@ const userSchema = new mongoose.Schema(
     passwordResetOtpExpires: {
       type: Date,
     },
+    refreshToken: {
+      type: String,
+    },
     trips: [tripSchema],
   },
   { timestamps: true }

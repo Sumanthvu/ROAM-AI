@@ -8,6 +8,24 @@ import transporter from "../config/nodemailer.js";
 import { sendEmail } from "../config/sendMail.js";
 import bcrypt from "bcrypt";
 
+const generateAccessAndRefreshTokens = async (userId) => {
+  try {
+    const user = await User.findById(userId);
+    const accessToken = user.generateAccessToken();
+    const refreshToken = user.generateRefreshToken();
+
+    user.refreshToken = refreshToken;
+    await user.save({ validateBeforeSave: false });
+
+    return { accessToken, refreshToken };
+  } catch (error) {
+    throw new ApiError(
+      500,
+      "Something went wrong while generating refresh and access token"
+    );
+  }
+};
+
 const generateOtp = () =>
   Math.floor(100000 + Math.random() * 900000).toString();
 
@@ -296,8 +314,7 @@ const sendOtpForRegistration = asyncHandler(async (req, res) => {
     throw new ApiError(409, "User with this email or username already exists");
   }
 
-  const hashedPassword = await bcrypt.hash(password, 10);
-
+//   const hashedPassword = await bcrypt.hash(password, 10);
 
   let coverImageLocalPath;
   if (
@@ -315,7 +332,7 @@ const sendOtpForRegistration = asyncHandler(async (req, res) => {
   req.session.registrationData = {
     userName,
     email,
-    password: hashedPassword,
+    password: password,
     coverImage: coverImage?.url || "",
     otp,
   };
@@ -362,4 +379,52 @@ const verifyOtpAndRegister = asyncHandler(async (req, res) => {
     );
 });
 
-export { sendOtpForRegistration, verifyOtpAndRegister };
+const loginUser = asyncHandler(async (req, res) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    throw new ApiError(401, "Both email and password are required for login");
+  }
+
+  const user = await User.findOne({ email });
+
+  if (!user) {
+    throw new ApiError(404, "User does not  exist");
+  }
+
+  const isPasswordValid = await user.isPasswordCorrect(password);
+
+  if (!isPasswordValid) {
+    throw new ApiError(404, "Password is incorrect");
+  }
+
+  const { accessToken, refreshToken } = await generateAccessAndRefreshTokens(
+    user._id
+  );
+
+  const loggedInUser = await User.findById(user._id).select(
+    -"password -refreshToken"
+  );
+
+  const options = {
+    httpOnly: true,
+    secure: true,
+  };
+
+  return res
+    .status(200)
+    .cookie("refreshToken", refreshToken, options)
+    .cookie("accessToken", accessToken, options)
+    .json(
+      new ApiResponse(
+        200,
+        {
+          user: loggedInUser,
+          accessToken,
+        },
+        "User logged in successfully"
+      )
+    );
+});
+
+export { sendOtpForRegistration, verifyOtpAndRegister, loginUser };
