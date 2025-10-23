@@ -631,6 +631,14 @@ const updateUserCoverImage = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, user, "Cover image updated successfully"));
 });
 
+const userProfile = asyncHandler(async(req,res)=>{
+    const user = req.user
+
+    return res
+    .status(200)
+    .json(new ApiResponse(200,user,"User profile fetched successfully"))
+})
+
 export {
   sendOtpForRegistration,
   verifyOtpAndRegister,
@@ -641,4 +649,5 @@ export {
   updateUserCoverImage,
   forgotPassowrd,
   resetPassword,
+  userProfile
 };
