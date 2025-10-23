@@ -451,6 +451,92 @@ const logOutUser = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, {}, "User logged out Successfully"));
 });
 
+const forgotPassowrd = asyncHandler(async (req, res) => {
+  const { email } = req.body;
+
+  if (!email) {
+    throw new ApiError(401, "Email is required");
+  }
+
+  const user = await User.findOne({ email });
+
+  if (!user) {
+    throw new ApiError("User does not exist");
+  }
+
+  const otp = generateOtp();
+
+  const otpExpires = new Date(Date.now() + 10 * 60 * 1000);
+
+  user.passwordResetOtp = otp;
+
+  user.passwordResetOtpExpires = otpExpires;
+
+  await user.save({ validateBeforeSave: false });
+
+  const emailSubject = "Reset Your Password";
+  const emailMessage = `<p>You have requested to reset your password. Your One-Time Password (OTP) is: <strong>${otp}</strong>. It is valid for 10 minutes.</p>`;
+
+  try {
+    await sendEmail(email, emailSubject, emailMessage);
+    return res
+      .status(200)
+      .json(
+        new ApiResponse(
+          200,
+          {},
+          "Password reset OTP has been sent to your email."
+        )
+      );
+  } catch (error) {
+    user.passwordResetOtp = undefined;
+    user.passwordResetOtpExpires = undefined;
+    await user.save({ validateBeforeSave: false });
+
+    throw new ApiError(
+      500,
+      "Failed to send password reset email. Please try again."
+    );
+  }
+});
+
+const resetPassword = asyncHandler(async (req, res) => {
+  const { email, otp, newPassword } = req.body;
+
+  if (!email || !otp || !newPassword) {
+    throw new ApiError(401, "All fields are required");
+  }
+
+  const user = await User.findOne({
+    email,
+    passwordResetOtp: otp,
+    passwordResetOtpExpires: { $gt: Date.now() },
+  });
+
+  if (!user) {
+    throw new ApiError(401, "Invalid credentials entered");
+  }
+
+  user.password = newPassword;
+
+  user.passwordResetOtp = undefined;
+  user.passwordResetOtpExpires = undefined;
+
+  user.refreshToken=undefined
+
+  await user.save();
+
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(
+        200,
+        {},
+        "Your password has been reset successfully. You can now login using your new password"
+      )
+    );
+});
+
 const changeCurrentPassword = asyncHandler(async (req, res) => {
   const { oldPassword, newPassword } = req.body;
 
@@ -552,5 +638,7 @@ export {
   logOutUser,
   changeCurrentPassword,
   refreshAccessToken,
-  updateUserCoverImage
+  updateUserCoverImage,
+  forgotPassowrd,
+  resetPassword,
 };

@@ -7,6 +7,8 @@ import {
   verifyOtpAndRegister,
   refreshAccessToken,
   updateUserCoverImage,
+  forgotPassowrd,
+  resetPassword,
 } from "../controllers/user.controllers.js";
 import { upload } from "../middlewares/multer.middleware.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
@@ -27,11 +29,15 @@ router.route("/verify-otp").post(verifyOtpAndRegister);
 
 router.route("/login").post(loginUser);
 
-router.route("refesh-token").post(refreshAccessToken);
+router.route("/refesh-token").post(refreshAccessToken);
 
 router
-  .route("update-cover-image")
+  .route("/update-cover-image")
   .patch(verifyJWT, upload.single("coverImage"), updateUserCoverImage);
+
+router.route("/forgot-password").post(forgotPassowrd);
+
+router.route("/reset-password").post(resetPassword);
 
 router.route("/logout").post(verifyJWT, logOutUser);
 
