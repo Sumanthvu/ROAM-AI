@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import './LoginPage.css'; // We'll create this CSS file next
+import './LoginPage.css'; 
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -15,7 +15,7 @@ const LoginPage = () => {
   const { login } = useAuth();
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent the form from refreshing the page
+    e.preventDefault();
     setError('');
     setLoading(true);
 
@@ -27,9 +27,9 @@ const LoginPage = () => {
 
     try {
       await login(email, password);
-      navigate('/dashboard'); // On successful login, redirect to the dashboard
+      navigate('/dashboard'); 
     } catch (err) {
-      // The error object is re-thrown from our AuthContext
+     
       const errorMessage = err.message || 'Failed to log in. Please check your credentials.';
       setError(errorMessage);
     } finally {

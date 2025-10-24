@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import './RegisterPage.css'; // We will create this CSS file
+import './RegisterPage.css';
 
 const RegisterPage = () => {
   const [formData, setFormData] = useState({
@@ -47,7 +47,7 @@ const RegisterPage = () => {
     try {
       const response = await register(data);
       setMessage(response.message || 'OTP sent to your email!');
-      setShowOtpForm(true); // Show the OTP form
+      setShowOtpForm(true); 
     } catch (err) {
       setError(err.message || 'Registration failed. Please try again.');
     } finally {
@@ -66,7 +66,7 @@ const RegisterPage = () => {
       setMessage('Registration successful! Redirecting to login...');
       setTimeout(() => {
         navigate('/login');
-      }, 2000); // Wait 2 seconds before redirecting
+      }, 2000); 
     } catch (err) {
       setError(err.message || 'Invalid OTP. Please try again.');
     } finally {
@@ -77,7 +77,7 @@ const RegisterPage = () => {
   return (
     <div className="register-container">
       {!showOtpForm ? (
-        // Registration Form
+        
         <div className="register-form-wrapper">
           <h2 className="register-title">Create an Account</h2>
           <p className="register-subtitle">Join us and start planning your next adventure!</p>
@@ -105,7 +105,7 @@ const RegisterPage = () => {
           </form>
         </div>
       ) : (
-        // OTP Verification Form
+        
         <div className="register-form-wrapper">
           <h2 className="register-title">Verify Your Email</h2>
           <p className="register-subtitle">An OTP has been sent to your email address.</p>

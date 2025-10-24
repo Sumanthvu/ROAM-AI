@@ -1,17 +1,35 @@
 // src/context/AuthContext.jsx
 
-import React, { createContext, useState, useContext } from "react";
-import axiosClient from "../api/axiosClient"; // Our configured axios instance
-
-// 1. Create the context
+import React, { createContext, useState, useContext, useEffect } from 'react';
+import axiosClient from '../api/axiosClient';
 const AuthContext = createContext();
 
-// 2. Create the provider component
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true); // To check initial auth status
+  const [loading, setLoading] = useState(true);
 
-  // Function to handle user login
+
+  useEffect(() => {
+    const checkUserSession = async () => {
+      try {
+        const response = await axiosClient.post('/users/refesh-token');
+        
+        if (response.data && response.data.success) {
+          const profileResponse = await axiosClient.get('/users/profile');
+          if (profileResponse.data && profileResponse.data.success) {
+              setUser(profileResponse.data.data);
+          }
+        }
+      } catch (error) {
+        console.log("No active session found.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    checkUserSession();
+  }, []);
+
   const login = async (email, password) => {
     try {
       const response = await axiosClient.post("/users/login", {
@@ -19,44 +37,36 @@ export const AuthProvider = ({ children }) => {
         password,
       });
       if (response.data && response.data.success) {
-        setUser(response.data.data.user); // Set user state with the user object from the response
+        setUser(response.data.data.user);
         return response.data;
       }
     } catch (error) {
       console.error("Login failed:", error);
-      // This is a more robust way to handle errors
       if (error.response && error.response.data) {
-        // If the server sent back a specific error message (e.g., "Invalid credentials")
         throw error.response.data;
       }
-      // For network errors where there is no response from the server
       throw error;
     }
   };
 
   const register = async (formData) => {
     try {
-      // We are sending multipart/form-data because of the cover image
       const response = await axiosClient.post("/users/register", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-      return response.data; // This will return a success message like "OTP sent successfully."
+      return response.data;
     } catch (error) {
-       console.log("THE ACTUAL ERROR OBJECT:", error); 
-      // This is the NEW catch block
+      console.log("THE ACTUAL ERROR OBJECT:", error);
       console.error("Registration step 1 failed:", error);
-      // Check if the server provided a specific JSON error response.
       if (
         error.response &&
         error.response.data &&
         error.response.data.message
       ) {
-        // If it did, create a new error with THAT specific message and throw it.
         throw new Error(error.response.data.message);
       } else {
-        // For other errors (network issues, etc.), throw a generic error.
         throw new Error("An unexpected error occurred. Please try again.");
       }
     }
@@ -65,7 +75,7 @@ export const AuthProvider = ({ children }) => {
   const verifyOtp = async (otp) => {
     try {
       const response = await axiosClient.post("/users/verify-otp", { otp });
-      return response.data; // This will return "User registered successfully!"
+      return response.data;
     } catch (error) {
       console.error("OTP verification failed:", error);
       if (
@@ -82,19 +92,15 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Function to handle user logout
   const logout = async () => {
     try {
       await axiosClient.post("/users/logout");
-      setUser(null); // Clear the user from state
+      setUser(null);
     } catch (error) {
       console.error("Logout failed:", error);
     }
   };
 
-  // Note: We will add the registration function here in a later step when we build the Register page.
-
-  // The value that will be available to all consuming components
   const value = {
     user,
     setUser,
@@ -102,15 +108,13 @@ export const AuthProvider = ({ children }) => {
     logout,
     register,
     verifyOtp,
-    isAuthenticated: !!user, // A handy boolean to check if the user object is not null
+    isAuthenticated: !!user,
     loading,
   };
 
-  // 3. Return the provider with the value
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
-// 4. Create a custom hook for easy consumption of the context
 export const useAuth = () => {
   return useContext(AuthContext);
 };
