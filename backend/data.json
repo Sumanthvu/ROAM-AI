@@ -1,0 +1,176 @@
+{
+  "tripPlan": {
+    "preferences": {
+      "travel_type": "Adventure",
+      "total_budget": 200000,
+      "budget_range": {
+        "transport": [20000, 40000],
+        "accommodation": [60000, 100000],
+        "food": [20000, 40000],
+        "entertainment": [10000, 30000]
+      },
+      "no_of_people": 7,
+      "group_type": "friends",
+      "duration": 8,
+      "interests": "mountains, trekking, snow",
+      "start_date": "2025-08-22",
+      "planning_style": "Holiday based"
+    },
+    "selected_place": "Gulmarg, Jammu & Kashmir",
+    "suggestions": [
+      {
+        "place": "Leh-Ladakh",
+        "reason": "High-altitude desert with stunning mountain scenery, ideal for trekking",
+        "weather_suitability": "June to September, 10°C to 25°C",
+        "travel_cost_estimate": {
+          "flight": "₹12,000–₹25,000",
+          "train": "₹2,500–₹5,000"
+        },
+        "accommodation_range": "₹1,500–₹8,000/night",
+        "safety_rating": "High",
+         "accessibility": "Kushok Bakula Rimpochee Airport (IXH) in Leh. Road access via Srinagar-Leh Highway or Manali-Leh Highway (seasonal).",
+        "permit_required": "Yes, Inner Line Permit required for certain areas.",
+         "photos": [
+          "https://images.unsplash.com/photo-1636790132954-b0a7467c308b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3ODk0ODJ8MHwxfHNlYXJjaHwxfHxMZWglMjBMYWRha2glMjBtb3VudGFpbnN8ZW58MHx8fHwxNzU1NzEwNjgyfDA&ixlib=rb-4.1.0&q=80&w=1080",
+          "https://images.unsplash.com/photo-1636803396010-a4d2fa5c4eef?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3ODk0ODJ8MHwxfHNlYXJjaHwyfHxMZWglMjBMYWRha2glMjBtb3VudGFpbnN8ZW58MHx8fHwxNzU1NzEwNjgyfDA&ixlib=rb-4.1.0&q=80&w=1080",
+          "https://images.unsplash.com/photo-1632194754249-ba2805ae7049?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3ODk0ODJ8MHwxfHNlYXJjaHwzfHxMZWglMjBMYWRha2glMjBtb3VudGFpbnN8ZW58MHx8fHwxNzU1NzEwNjgyfDA&ixlib=rb-4.1.0&q=80&w=1080",
+          "https://images.unsplash.com/photo-1665510022052-2efdfae3dc14?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3ODk0ODJ8MHwxfHNlYXJjaHw0fHxMZWglMjBMYWRha2glMjBtb3VudGFpbnN8ZW58MHx8fHwxNzU1NzEwNjgyfDA&ixlib=rb-4.1.0&q=80&w=1080",
+          "https://images.unsplash.com/photo-1533632199060-c7200b97e65b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3ODk0ODJ8MHwxfHNlYXJjaHw1fHxMZWglMjBMYWRha2glMjBtb3VudGFpbnN8ZW58MHx8fHwxNzU1NzEwNjgyfDA&ixlib=rb-4.1.0&q=80&w=1080",
+          "https://images.unsplash.com/photo-1653112122775-855a525a5846?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3ODk0ODJ8MHwxfHNlYXJjaHw2fHxMZWglMjBMYWRha2glMjBtb3VudGFpbnN8ZW58MHx8fHwxNzU1NzEwNjgyfDA&ixlib=rb-4.1.0&q=80&w=1080"
+        ]
+      }
+    ],
+    "local_info": {
+      "top_attractions": [
+        {
+          "name": "Gulmarg Gondola",
+          "description": "One of the highest cable cars in the world offering breathtaking views",
+          "category": "Adventure",
+          "why_visit": "For unparalleled panoramic views of snow-capped mountains"
+        }
+      ],
+      "local_cuisine": [
+        {
+          "dish": "Rogan Josh",
+          "description": "Aromatic lamb dish cooked with Kashmiri chilies and spices",
+          "recommended_places": ["Mughal Darbar", "Local Dhabas"]
+        }
+      ]
+    },
+    "selected_attractions": ["Gulmarg Gondola", "Apharwat Peak"],
+    "selected_cuisines": ["Rogan Josh", "Kahwa"],
+    "itinerary": {
+      "itinerary": [
+        {
+          "day": 1,
+          "steps": [
+            {
+              "type": "travel",
+              "from": "Srinagar Airport",
+              "to": "Gulmarg",
+              "options": [
+                {
+                  "mode": "Taxi",
+                  "time": "2-3 hours",
+                  "cost": "₹2500-₹4000"
+                }
+              ]
+            },
+            {
+              "type": "accommodation",
+              "options": [
+                {
+                  "name": "The Khyber Himalayan Resort & Spa",
+                  "price_range": "₹25000-₹40000/night",
+                  "rating": 4.5
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "safety": {
+      "overall_risk_level": "Moderate",
+      "common_scams": ["Overpriced pony rides", "Skiing equipment rental scams"],
+      "health": {
+        "food_water_safety": "Drink only bottled or purified water",
+        "altitude_note": "Acclimatize gradually to avoid altitude sickness"
+      }
+    },
+    "packing": {
+      "essentials": [
+        {
+          "item": "Backpack",
+          "why": "To carry all your belongings comfortably",
+          "qty": "1"
+        }
+      ],
+      "clothing": [
+        {
+          "item": "Waterproof Jacket",
+          "why": "Essential for protection against rain and wind",
+          "qty": "1"
+        }
+      ]
+    },
+    "budget": {
+      "budget_range": {
+        "transport": [20000, 40000],
+        "accommodation": [60000, 100000],
+        "food": [20000, 40000],
+        "entertainment": [10000, 30000]
+      },
+      "per_day_estimate_per_person": {
+        "total": "₹1964 - ₹3750"
+      }
+    },
+    "transport": {
+      "intercity": [
+        {
+          "mode": "Flight + Cab",
+          "from": "Delhi",
+          "to": "Gulmarg",
+          "time": "Flight: 1.5-3 hours + Cab: 2-3 hours",
+          "approx_cost": "₹25,000 - ₹45,000"
+        }
+      ],
+      "in_city": [
+        {
+          "mode": "Walk",
+          "when_to_use": "Exploring main Gulmarg area",
+          "approx_cost": "₹0"
+        }
+      ]
+    },
+    "accommodation": {
+      "stays": [
+        {
+          "name": "The Khyber Himalayan Resort & Spa",
+          "type": "Resort",
+          "approx_price_per_night": "₹25,000 - ₹40,000",
+          "suits": "Friends",
+          "why": "Luxury resort with stunning views near Gondola"
+        }
+      ]
+    },
+    "reviews": {
+      "attractions": [
+        {
+          "name": "Gulmarg Gondola",
+          "average_rating": 4.5,
+          "pros": ["Breathtaking views", "Highest cable car in the world"],
+          "cons": ["Long queues", "Expensive"]
+        }
+      ],
+      "restaurants": [
+        {
+          "name": "Highland Park Restaurant",
+          "average_rating": 4.3,
+          "pros": ["Good food quality", "Cozy ambiance"],
+          "cons": ["Can be expensive", "Crowded during peak season"]
+        }
+      ]
+    }
+  }
+}
