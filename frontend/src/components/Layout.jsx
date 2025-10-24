@@ -1,10 +1,19 @@
 // src/components/Layout.jsx
 
 import React from 'react';
-import { Outlet, Link } from 'react-router-dom';
-import './Layout.css'; // We will create this CSS file next
+import { Outlet, Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext'; 
+import './Layout.css';
 
 const Layout = () => {
+  const { isAuthenticated, user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await logout();
+    navigate('/login');
+  };
+
   return (
     <>
       <header className="navbar">
@@ -12,13 +21,26 @@ const Layout = () => {
           <Link to="/">Roam AI</Link>
         </div>
         <nav className="navbar-links">
-          {/* We will add conditional links here later (e.g., show Profile/Logout if logged in) */}
-          <Link to="/login">Login</Link>
-          <Link to="/register">Register</Link>
+          {isAuthenticated ? (
+          
+            <>
+              <span>Welcome, {user?.userName}!</span> {/* Display the user's name */}
+              <Link to="/dashboard">Dashboard</Link>
+              <button onClick={handleLogout} className="logout-button">
+                Logout
+              </button>
+            </>
+          ) : (
+          
+            <>
+              <Link to="/login">Login</Link>
+              <Link to="/register">Register</Link>
+            </>
+          )}
         </nav>
       </header>
       <main className="main-content">
-        <Outlet /> {/* This is where the content of our different pages will be rendered */}
+        <Outlet />
       </main>
     </>
   );

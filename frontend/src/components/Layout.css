@@ -34,3 +34,27 @@
   max-width: 1200px;
   margin: 0 auto;
 }
+
+.navbar-links span {
+  margin-right: 1.5rem;
+  color: #4a5568;
+  font-weight: 500;
+}
+
+.logout-button {
+  background-color: transparent;
+  border: 1px solid #e53e3e;
+  color: #e53e3e;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-left: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.logout-button:hover {
+  background-color: #e53e3e;
+  color: #ffffff;
+}
