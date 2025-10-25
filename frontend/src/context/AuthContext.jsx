@@ -101,6 +101,33 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const forgotPassword = async (email) => {
+    try {
+      const response = await axiosClient.post('/users/forgot-password', { email });
+      return response.data;
+    } catch (error) {
+      console.error('Forgot password failed:', error);
+      if (error.response?.data?.message) {
+        throw new Error(error.response.data.message);
+      }
+      throw new Error('An unexpected error occurred.');
+    }
+  };
+
+  const resetPassword = async (email, otp, newPassword) => {
+    try {
+      const response = await axiosClient.post('/users/reset-password', { email, otp, newPassword });
+      return response.data;
+    } catch (error) {
+      console.error('Reset password failed:', error);
+      if (error.response?.data?.message) {
+        throw new Error(error.response.data.message);
+      }
+      throw new Error('An unexpected error occurred.');
+    }
+  };
+
+
   const value = {
     user,
     setUser,
@@ -108,6 +135,8 @@ export const AuthProvider = ({ children }) => {
     logout,
     register,
     verifyOtp,
+    forgotPassword,
+    resetPassword,
     isAuthenticated: !!user,
     loading,
   };

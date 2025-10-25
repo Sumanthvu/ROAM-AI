@@ -1,0 +1,100 @@
+/* src/components/ItineraryDisplay.css */
+
+.itinerary-container {
+  background-color: #ffffff;
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.itinerary-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.itinerary-title {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.save-trip-button {
+  background-color: #38a169;
+  color: white;
+  padding: 0.7rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.save-trip-button:hover {
+  background-color: #2f855a;
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.day-card {
+  background-color: #f7fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.day-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #5a67d8;
+  margin-bottom: 1.5rem;
+}
+
+.day-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding-left: 1.5rem;
+  border-left: 3px solid #cbd5e0;
+}
+
+.step {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  position: relative;
+}
+
+.step::before {
+  content: '';
+  position: absolute;
+  left: -26px; /* (1.5rem + 3px/2) */
+  top: 5px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #5a67d8;
+  border: 2px solid #ffffff;
+}
+
+.step-time {
+  font-weight: 600;
+  color: #4a5568;
+  width: 80px;
+}
+
+.step-content {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.step-content p {
+  margin: 0;
+}

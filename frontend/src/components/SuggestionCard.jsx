@@ -1,9 +1,11 @@
 // src/components/SuggestionCard.jsx
 
-import React from 'react';
+import React, { useState } from 'react';
 import './SuggestionCard.css';
 
 const SuggestionCard = ({ suggestion, onSelect }) => {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
   const {
     place,
     reason,
@@ -14,6 +16,18 @@ const SuggestionCard = ({ suggestion, onSelect }) => {
     photos,
   } = suggestion;
 
+  const hasPhotos = photos && photos.length > 0;
+
+  const handleNextImage = (e) => {
+    e.stopPropagation(); // Prevent the card's onSelect from firing
+    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % photos.length);
+  };
+
+  const handlePrevImage = (e) => {
+    e.stopPropagation();
+    setCurrentImageIndex((prevIndex) => (prevIndex - 1 + photos.length) % photos.length);
+  };
+
   const handleSelect = () => {
     onSelect(suggestion);
   };
@@ -21,7 +35,22 @@ const SuggestionCard = ({ suggestion, onSelect }) => {
   return (
     <div className="suggestion-card">
       <div className="card-image-container">
-        <img src={photos[0]} alt={place} className="card-image" />
+        {hasPhotos ? (
+          <>
+            <img src={photos[currentImageIndex]} alt={`${place} - ${currentImageIndex + 1}`} className="card-image" />
+            {photos.length > 1 && (
+              <>
+                <button onClick={handlePrevImage} className="carousel-button prev">‹</button>
+                <button onClick={handleNextImage} className="carousel-button next">›</button>
+                <div className="image-counter">{currentImageIndex + 1} / {photos.length}</div>
+              </>
+            )}
+          </>
+        ) : (
+          <div className="placeholder-image">
+            <span>No Image Available</span>
+          </div>
+        )}
       </div>
       <div className="card-content">
         <h3 className="card-title">{place}</h3>

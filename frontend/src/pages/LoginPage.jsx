@@ -1,9 +1,9 @@
 // src/pages/LoginPage.jsx
 
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import './LoginPage.css'; 
+import './FormPages.css';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -27,22 +27,20 @@ const LoginPage = () => {
 
     try {
       await login(email, password);
-      navigate('/dashboard'); 
+      navigate('/dashboard');
     } catch (err) {
-     
-      const errorMessage = err.message || 'Failed to log in. Please check your credentials.';
-      setError(errorMessage);
+      setError(err.message || 'Failed to log in. Please check your credentials.');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="login-container">
-      <div className="login-form-wrapper">
-        <h2 className="login-title">Welcome Back</h2>
-        <p className="login-subtitle">Please enter your details to sign in.</p>
-        <form onSubmit={handleSubmit} className="login-form">
+    <div className="form-page-container">
+      <div className="form-wrapper">
+        <h2 className="form-title">Welcome Back</h2>
+        <p className="form-subtitle">Please enter your details to sign in.</p>
+        <form onSubmit={handleSubmit} className="form-body">
           <div className="input-group">
             <label htmlFor="email">Email</label>
             <input
@@ -65,8 +63,11 @@ const LoginPage = () => {
               required
             />
           </div>
+          <div className="form-link">
+            <Link to="/forgot-password">Forgot Password?</Link>
+          </div>
           {error && <p className="error-message">{error}</p>}
-          <button type="submit" className="login-button" disabled={loading}>
+          <button type="submit" className="form-button" disabled={loading}>
             {loading ? 'Signing In...' : 'Sign In'}
           </button>
         </form>

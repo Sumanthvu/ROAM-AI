@@ -1,0 +1,122 @@
+/* src/pages/FormPages.css */
+
+.form-page-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  padding: 2rem;
+}
+
+.form-wrapper {
+  background-color: #ffffff;
+  padding: 3rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 450px;
+  text-align: center;
+}
+
+.form-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: #1a202c;
+}
+
+.form-subtitle {
+  font-size: 1rem;
+  color: #718096;
+  margin-bottom: 2rem;
+}
+
+.form-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  text-align: left;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-group label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #4a5568;
+}
+
+.input-group input {
+  padding: 0.75rem 1rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.input-group input[type="file"] {
+  padding: 0.5rem;
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: #5a67d8;
+  box-shadow: 0 0 0 3px rgba(90, 103, 216, 0.2);
+}
+
+.error-message {
+  color: #e53e3e;
+  font-size: 0.875rem;
+  text-align: center;
+  margin-top: -0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.success-message {
+  color: #38a169;
+  font-size: 0.875rem;
+  text-align: center;
+}
+
+.form-button {
+  background-color: #5a67d8;
+  color: white;
+  padding: 0.8rem 1rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 1rem;
+}
+
+.form-button:hover:not(:disabled) {
+  background-color: #434190;
+}
+
+.form-button:disabled {
+  background-color: #a0aec0;
+  cursor: not-allowed;
+}
+
+.form-link {
+  text-align: right;
+  font-size: 0.9rem;
+  margin-top: -1rem;
+  margin-bottom: -0.5rem;
+}
+
+.form-link a {
+  color: #5a67d8;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.form-link a:hover {
+  text-decoration: underline;
+}
