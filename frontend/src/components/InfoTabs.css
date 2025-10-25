@@ -83,3 +83,66 @@
   padding: 1rem;
   border-radius: 8px;
 }
+
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.image-wrapper img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+
+.image-wrapper img:hover {
+  transform: scale(1.05);
+}
+
+
+.review-grid {
+  display: grid;
+  gap: 1rem;
+}
+.review-card {
+  background-color: #edf2f7;
+  padding: 1rem;
+  border-radius: 8px;
+}
+.review-card h5 {
+  margin: 0 0 0.5rem;
+  font-size: 1.1rem;
+  display: flex;
+  justify-content: space-between;
+}
+.review-card p { margin: 0.25rem 0; }
+.tip { color: #2d3748; font-style: italic; }
+
+/* Styles for TransportInfo */
+.transport-list {
+  display: grid;
+  gap: 1rem;
+}
+.transport-item {
+  background-color: #edf2f7;
+  padding: 1rem;
+  border-radius: 8px;
+}
+.transport-item h5 { margin: 0 0 0.5rem; }
+.transport-item p { margin: 0.25rem 0; }
+
+/* Styles for AccommodationInfo */
+.stay-grid {
+  display: grid;
+  gap: 1rem;
+}
+.stay-card {
+  background-color: #edf2f7;
+  padding: 1rem;
+  border-radius: 8px;
+}
+.stay-card h5 { margin: 0 0 0.5rem; }
+.stay-card p { margin: 0.25rem 0; }

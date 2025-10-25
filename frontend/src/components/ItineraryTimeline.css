@@ -1,0 +1,78 @@
+/* src/components/ItineraryTimeline.css */
+
+.timeline-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.day-container {
+  position: relative;
+  padding-left: 50px; /* Space for the timeline line */
+  border-left: 4px solid #e2e8f0;
+}
+
+.day-title-timeline {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #5a67d8;
+  margin: 0 0 2rem -50px; /* Position it over the line */
+  background-color: #f7fafc;
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+}
+
+.step-container {
+  display: flex;
+  gap: 1.5rem;
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.step-icon {
+  position: absolute;
+  left: -73px; /* Center the icon on the timeline */
+  top: 0;
+  font-size: 1.8rem;
+  background-color: #ffffff;
+  padding: 0.5rem;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 4px solid #e2e8f0;
+}
+
+.step-content-wrapper {
+  flex: 1;
+}
+
+.step-time-range {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #718096;
+  margin-bottom: 0.5rem;
+}
+
+.step-details .step-primary {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0 0 0.25rem;
+  color: #2d3748;
+}
+
+.step-details .step-secondary {
+  font-size: 1rem;
+  color: #4a5568;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.step-details .step-suggestion {
+  font-size: 0.9rem;
+  color: #718096;
+  margin: 0.25rem 0 0 1rem;
+}
