@@ -1,0 +1,95 @@
+/* src/components/SavedTripCard.css */
+
+.saved-trip-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e2e8f0;
+}
+
+.card-banner {
+  padding: 2rem;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  text-align: center;
+}
+
+.card-place-title {
+  color: #ffffff;
+  font-size: 2.25rem;
+  margin: 0;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.card-delete-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  border: 1px solid #ffffff;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  line-height: 28px;
+}
+
+.card-delete-button:hover {
+  background-color: #e53e3e;
+  border-color: #e53e3e;
+}
+
+.card-summary {
+  display: flex;
+  justify-content: space-around;
+  padding: 1rem;
+  background-color: #f7fafc;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.summary-item {
+  text-align: center;
+}
+
+.summary-item strong {
+  display: block;
+  font-size: 0.8rem;
+  color: #718096;
+  text-transform: uppercase;
+}
+
+.summary-item span {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #2d3748;
+}
+
+.expand-button {
+  width: 100%;
+  background-color: #5a67d8;
+  color: white;
+  padding: 0.8rem;
+  border: none;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.expand-button:hover {
+  background-color: #434190;
+}
+
+.expanded-content {
+  padding: 1.5rem;
+}
+
+.expanded-content .itinerary-header {
+  display: none; 
+}

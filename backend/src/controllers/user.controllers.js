@@ -603,34 +603,65 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
   }
 });
 
+// const updateUserCoverImage = asyncHandler(async (req, res) => {
+//   const coverImageLocalPath = req.file?.path;
+
+//   if (!coverImageLocalPath) {
+//     throw new ApiError(400, "File is missing");
+//   }
+
+//   const coverImage = await uploadOnCloudinary(coverImageLocalPath);
+
+//   if (!coverImage?.url) {
+//     throw new ApiError(400, "Error while uploading");
+//   }
+
+//   const user = await User.findByIdAndUpdate(
+//     req.user?._id,
+//     {
+//       $set: {
+//         coverImage: coverImage.url,
+//       },
+//     },
+//     { new: true }
+//   ).select("-password");
+
+//   return res
+//     .status(200)
+//     .json(new ApiResponse(200, user, "Cover image updated successfully"));
+// });
+
+
 const updateUserCoverImage = asyncHandler(async (req, res) => {
   const coverImageLocalPath = req.file?.path;
+  let newCoverImageUrl = null; 
 
-  if (!coverImageLocalPath) {
-    throw new ApiError(400, "File is missing");
-  }
-
-  const coverImage = await uploadOnCloudinary(coverImageLocalPath);
-
-  if (!coverImage?.url) {
-    throw new ApiError(400, "Error while uploading");
+  if (coverImageLocalPath) {
+    const coverImage = await uploadOnCloudinary(coverImageLocalPath);
+    if (!coverImage?.url) {
+      throw new ApiError(500, "Error while uploading to Cloudinary");
+    }
+    newCoverImageUrl = coverImage.url;
+  } else {
+    newCoverImageUrl = null;
   }
 
   const user = await User.findByIdAndUpdate(
     req.user?._id,
     {
       $set: {
-        coverImage: coverImage.url,
+        coverImage: newCoverImageUrl,
       },
     },
     { new: true }
   ).select("-password");
 
+  const message = newCoverImageUrl ? "Cover image updated successfully" : "Cover image removed successfully";
+
   return res
     .status(200)
-    .json(new ApiResponse(200, user, "Cover image updated successfully"));
+    .json(new ApiResponse(200, user, message));
 });
-
 const userProfile = asyncHandler(async(req,res)=>{
     const user = req.user
 

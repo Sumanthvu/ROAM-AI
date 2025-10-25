@@ -1,0 +1,85 @@
+/* src/components/InfoTabs.css */
+
+.info-tab-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.info-section {
+  background-color: #f7fafc;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.info-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #2d3748;
+  margin: 0 0 1rem;
+}
+
+.info-list {
+  padding-left: 20px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  color: #4a5568;
+}
+
+.info-list li::marker {
+  color: #5a67d8;
+}
+
+/* Specific to SafetyInfo */
+.risk-level {
+  font-weight: bold;
+  padding: 0.2rem 0.6rem;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 1rem;
+}
+.risk-level.low { background-color: #38a169; }
+.risk-level.moderate { background-color: #dd6b20; }
+.risk-level.high { background-color: #e53e3e; }
+
+.contacts-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+}
+
+.contact-item span {
+  font-weight: 500;
+  color: #4a5568;
+}
+
+/* Styles for PackingList (we'll create this component next) */
+.packing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.packing-category-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #5a67d8;
+  margin-bottom: 1rem;
+}
+
+/* Styles for BudgetBreakdown (we'll create this component next) */
+.budget-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.budget-notes {
+  grid-column: 1 / -1; /* Make notes span full width */
+  background-color: #edf2f7;
+  padding: 1rem;
+  border-radius: 8px;
+}

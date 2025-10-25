@@ -1,25 +1,22 @@
 // src/components/ItineraryDisplay.jsx
 
-import React from 'react';
+import React, { useState } from 'react';
 import './ItineraryDisplay.css';
+import ItineraryTimeline from './ItineraryTimeline';
+import SafetyInfo from './SafetyInfo';
+import PackingList from './PackingList';
+import BudgetBreakdown from './BudgetBreakdown';
 
-const ItineraryDisplay = ({ place, itinerary, onSave }) => {
-  const renderStep = (step, index) => {
-    switch (step.type) {
-      case 'travel':
-        return <p><strong>Travel:</strong> Go from {step.from} to {step.to} via {step.options[0].mode} ({step.options[0].time}).</p>;
-      case 'accommodation':
-        return <p><strong>Stay:</strong> Check in at {step.options[0].name}. {step.options[0].note}</p>;
-      case 'spot':
-        return <p><strong>Visit:</strong> {step.name} ({step.category}). {step.reason}</p>;
-      case 'restaurant':
-        return <p><strong>Eat:</strong> {step.options[0].note} at {step.options[0].name}.</p>;
-      case 'cuisine':
-        return <p><strong>Try:</strong> {step.dish}, a local dish from {step.origin}.</p>;
-      case 'break':
-        return <p><strong>Break:</strong> {step.activity} ({step.duration}).</p>;
-      default:
-        return null;
+const ItineraryDisplay = ({ place, itinerary, isSaved, onSave, onUnsave }) => {
+  const [activeTab, setActiveTab] = useState('timeline');
+
+  const renderTabContent = () => {
+    switch (activeTab) {
+      case 'timeline': return <ItineraryTimeline timeline={itinerary.itinerary} />;
+      case 'safety': return <SafetyInfo safety={itinerary.safety} />;
+      case 'packing': return <PackingList packing={itinerary.packing} />;
+      case 'budget': return <BudgetBreakdown budget={itinerary.budget} />;
+      default: return null;
     }
   };
 
@@ -27,26 +24,22 @@ const ItineraryDisplay = ({ place, itinerary, onSave }) => {
     <div className="itinerary-container">
       <div className="itinerary-header">
         <h2 className="itinerary-title">Your Custom Itinerary for {place}</h2>
-        <button onClick={onSave} className="save-trip-button">Save Trip to Profile</button>
+        {isSaved ? (
+          <button onClick={onUnsave} className="save-trip-button unsave">Unsave Trip</button>
+        ) : (
+          <button onClick={onSave} className="save-trip-button">Save Trip to Profile</button>
+        )}
       </div>
-      <div className="timeline">
-        {itinerary.itinerary.map((day) => (
-          <div key={day.day} className="day-card">
-            <h3 className="day-title">Day {day.day}</h3>
-            <div className="day-steps">
-              {day.steps.map((step, index) => (
-                <div key={index} className="step">
-                  <div className="step-time">
-                    {step.arrival_time ? `${step.arrival_time}` : ''}
-                  </div>
-                  <div className="step-content">
-                    {renderStep(step)}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        ))}
+
+      <div className="itinerary-tabs">
+        <button onClick={() => setActiveTab('timeline')} className={activeTab === 'timeline' ? 'active' : ''}>Timeline</button>
+        <button onClick={() => setActiveTab('safety')} className={activeTab === 'safety' ? 'active' : ''}>Safety</button>
+        <button onClick={() => setActiveTab('packing')} className={activeTab === 'packing' ? 'active' : ''}>Packing List</button>
+        <button onClick={() => setActiveTab('budget')} className={activeTab === 'budget' ? 'active' : ''}>Budget</button>
+      </div>
+
+      <div className="itinerary-tab-content">
+        {renderTabContent()}
       </div>
     </div>
   );

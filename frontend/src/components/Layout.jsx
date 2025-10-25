@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Outlet, Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext'; 
+import { useAuth } from '../context/AuthContext';
 import './Layout.css';
 
 const Layout = () => {
@@ -22,16 +22,15 @@ const Layout = () => {
         </div>
         <nav className="navbar-links">
           {isAuthenticated ? (
-          
             <>
-              <span>Welcome, {user?.userName}!</span> {/* Display the user's name */}
+              <span>Welcome, {user?.userName}!</span>
               <Link to="/dashboard">Dashboard</Link>
+              <Link to="/profile">My Profile</Link>
               <button onClick={handleLogout} className="logout-button">
                 Logout
               </button>
             </>
           ) : (
-          
             <>
               <Link to="/login">Login</Link>
               <Link to="/register">Register</Link>

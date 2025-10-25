@@ -127,6 +127,9 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+   const updateUser = (newUserData) => {
+    setUser(prevUser => ({ ...prevUser, ...newUserData }));
+  };
 
   const value = {
     user,
@@ -139,6 +142,7 @@ export const AuthProvider = ({ children }) => {
     resetPassword,
     isAuthenticated: !!user,
     loading,
+    updateUser,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

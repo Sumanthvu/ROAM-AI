@@ -98,3 +98,45 @@
 .step-content p {
   margin: 0;
 }
+
+
+.itinerary-tabs {
+  display: flex;
+  gap: 0.5rem;
+  border-bottom: 2px solid #e2e8f0;
+  margin-bottom: 2rem;
+}
+
+.itinerary-tabs button {
+  padding: 0.8rem 1.5rem;
+  border: none;
+  background-color: transparent;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #718096;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: all 0.3s ease;
+  transform: translateY(2px);
+}
+
+.itinerary-tabs button:hover {
+  color: #2d3748;
+}
+
+.itinerary-tabs button.active {
+  color: #5a67d8;
+  border-bottom-color: #5a67d8;
+}
+
+.itinerary-tab-content {
+  padding: 1rem 0;
+}
+
+.save-trip-button.unsave {
+  background-color: #e53e3e;
+}
+
+.save-trip-button.unsave:hover {
+  background-color: #c53030;
+}
