@@ -2,22 +2,21 @@
 
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import axiosClient from '../api/axiosClient';
+
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-
   useEffect(() => {
     const checkUserSession = async () => {
       try {
-        const response = await axiosClient.post('/users/refesh-token');
-        
+        const response = await axiosClient.post('/users/refresh-token');
         if (response.data && response.data.success) {
           const profileResponse = await axiosClient.get('/users/profile');
           if (profileResponse.data && profileResponse.data.success) {
-              setUser(profileResponse.data.data);
+            setUser(profileResponse.data.data);
           }
         }
       } catch (error) {
@@ -26,49 +25,36 @@ export const AuthProvider = ({ children }) => {
         setLoading(false);
       }
     };
-
     checkUserSession();
   }, []);
 
   const login = async (email, password) => {
     try {
-      const response = await axiosClient.post("/users/login", {
-        email,
-        password,
-      });
+      const response = await axiosClient.post("/users/login", { email, password });
       if (response.data && response.data.success) {
         setUser(response.data.data.user);
         return response.data;
       }
     } catch (error) {
       console.error("Login failed:", error);
-      if (error.response && error.response.data) {
-        throw error.response.data;
+      if (error.response?.data?.message) {
+        throw new Error(error.response.data.message);
       }
-      throw error;
+      throw new Error('Login failed due to a network or server issue.');
     }
   };
 
   const register = async (formData) => {
     try {
       const response = await axiosClient.post("/users/register", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+        headers: { "Content-Type": "multipart/form-data" },
       });
       return response.data;
     } catch (error) {
-      console.log("THE ACTUAL ERROR OBJECT:", error);
-      console.error("Registration step 1 failed:", error);
-      if (
-        error.response &&
-        error.response.data &&
-        error.response.data.message
-      ) {
+      if (error.response?.data?.message) {
         throw new Error(error.response.data.message);
-      } else {
-        throw new Error("An unexpected error occurred. Please try again.");
       }
+      throw new Error("An unexpected error occurred during registration.");
     }
   };
 
@@ -77,18 +63,10 @@ export const AuthProvider = ({ children }) => {
       const response = await axiosClient.post("/users/verify-otp", { otp });
       return response.data;
     } catch (error) {
-      console.error("OTP verification failed:", error);
-      if (
-        error.response &&
-        error.response.data &&
-        error.response.data.message
-      ) {
+      if (error.response?.data?.message) {
         throw new Error(error.response.data.message);
-      } else {
-        throw new Error(
-          "An unexpected error occurred during OTP verification."
-        );
       }
+      throw new Error("An unexpected error occurred during OTP verification.");
     }
   };
 
@@ -106,7 +84,6 @@ export const AuthProvider = ({ children }) => {
       const response = await axiosClient.post('/users/forgot-password', { email });
       return response.data;
     } catch (error) {
-      console.error('Forgot password failed:', error);
       if (error.response?.data?.message) {
         throw new Error(error.response.data.message);
       }
@@ -119,7 +96,6 @@ export const AuthProvider = ({ children }) => {
       const response = await axiosClient.post('/users/reset-password', { email, otp, newPassword });
       return response.data;
     } catch (error) {
-      console.error('Reset password failed:', error);
       if (error.response?.data?.message) {
         throw new Error(error.response.data.message);
       }
@@ -127,7 +103,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-   const updateUser = (newUserData) => {
+  const updateUser = (newUserData) => {
     setUser(prevUser => ({ ...prevUser, ...newUserData }));
   };
 

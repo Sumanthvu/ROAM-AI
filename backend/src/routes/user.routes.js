@@ -1,3 +1,4 @@
+//user routes
 import { Router } from "express";
 import {
   changeCurrentPassword,
@@ -30,7 +31,7 @@ router.route("/verify-otp").post(verifyOtpAndRegister);
 
 router.route("/login").post(loginUser);
 
-router.route("/refesh-token").post(refreshAccessToken);
+router.route("/refresh-token").post(refreshAccessToken);
 
 router
   .route("/update-cover-image")
