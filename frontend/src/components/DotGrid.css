@@ -1,0 +1,27 @@
+/* src/components/DotGrid.css */
+
+.dot-grid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  position: absolute; /* Changed to absolute to act as a background */
+  top: 0;
+  left: 0;
+  z-index: 0; /* Ensures it's behind the content */
+}
+
+.dot-grid__wrap {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.dot-grid__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: all; /* Allow mouse events to pass through to the canvas */
+}

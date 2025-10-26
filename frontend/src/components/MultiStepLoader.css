@@ -1,0 +1,75 @@
+/* src/components/MultiStepLoader.css */
+
+.checklist-loader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 9999;
+}
+
+.checklist-loader-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  width: 90%;
+  max-width: 500px;
+}
+
+.loader-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.item-icon {
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-done {
+  color: #4a5568; /* Gray for completed */
+}
+
+.icon-current {
+  color: #48bb78; /* Green for current */
+  animation: spin 1.5s linear infinite;
+}
+
+.icon-pending {
+  color: #4a5568; /* Gray for pending */
+  opacity: 0.5;
+}
+
+.item-text {
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin: 0;
+  transition: color 0.3s ease;
+}
+
+.text-done {
+  color: #a0aec0; /* Lighter gray for completed text */
+}
+
+.text-current {
+  color: #f7fafc; /* White for current text */
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

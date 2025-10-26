@@ -1,0 +1,39 @@
+/* src/components/BackgroundBoxes.css */
+
+.background-boxes-container {
+  position: absolute;
+  left: 25%;
+  top: -25%;
+  display: flex;
+  height: 100%;
+  width: 100%;
+  z-index: 0;
+  transform-style: preserve-3d;
+  padding: 1rem;
+}
+
+.box-row {
+  position: relative;
+  width: 4rem; /* w-16 */
+  height: 2rem; /* h-8 */
+  border-left: 1px solid #334155; /* border-slate-700 */
+}
+
+.box-cell {
+  position: relative;
+  width: 4rem; /* w-16 */
+  height: 2rem; /* h-8 */
+  border-right: 1px solid #334155; /* border-slate-700 */
+  border-top: 1px solid #334155; /* border-slate-700 */
+}
+
+.box-svg {
+  position: absolute;
+  top: -14px;
+  left: -22px;
+  width: 2.5rem; /* w-10 */
+  height: 1.5rem; /* h-6 */
+  stroke: #334155; /* text-slate-700 */
+  stroke-width: 1px;
+  pointer-events: none;
+}
