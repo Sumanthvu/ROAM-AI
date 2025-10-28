@@ -34,11 +34,11 @@ const router = createBrowserRouter([
   // --- NEW: Standalone routes for the AuthPage ---
   {
     path: '/login',
-    element: <LoginPage />,
+    element: <AuthPage />,
   },
   {
     path: '/register',
-    element: <RegisterPage />,
+    element: <AuthPage />,
   },
 ]);
 
