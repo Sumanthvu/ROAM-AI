@@ -217,9 +217,9 @@ const Layout = () => {
               onMouseLeave={() => setLogoHover(false)}
             >
               <div style={logoHover ? logoBadgeHoverStyle : logoBadgeStyle}>
-                <span style={{ color: "white", fontWeight: "bold", fontSize: "1.125rem" }}>R</span>
+                <span style={{ color: "white", fontWeight: "bold", fontSize: "1.125rem" }}>Y</span>
               </div>
-              <span style={logoTextStyle}>Roam AI</span>
+              <span style={logoTextStyle}>Yaatra AI</span>
             </Link>
 
             <nav style={navStyle}>
