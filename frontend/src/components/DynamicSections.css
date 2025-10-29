@@ -1,7 +1,7 @@
 /* --- Main Container & Header --- */
 .dynamic-sections-container {
   padding: 6rem 2rem;
-  background-color: #0F172A;
+  background-color: #07152c01;
   overflow-x: hidden; /* Prevent horizontal scrollbars during animation */
   position: relative;
 }

@@ -1,0 +1,102 @@
+/* Grid container for the cards */
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
+  gap: 1rem;
+}
+
+/* Responsive grid columns */
+@media (min-width: 768px) {
+  .grid-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Each grid item link */
+.grid-item {
+  position: relative;
+  display: block;
+  padding: 0.5rem;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  overflow: visible;
+}
+
+/* Hover background overlay span */
+.hover-background {
+  position: absolute;
+  inset: 0; /* top, right, bottom, left = 0 */
+  width: 100%;
+  height: 100%;
+  background-color: rgba(230, 230, 230, 1); /* neutral-200 */
+  border-radius: 1.5rem; /* 24px rounded-3xl */
+  z-index: 10;
+  pointer-events: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  .hover-background {
+    background-color: rgba(15, 23, 42, 0.8); /* slate-800/[0.8] */
+  }
+}
+
+/* Card container */
+.card-container {
+  border-radius: 1rem; /* rounded-2xl = 16px */
+  background-color: black;
+  border: 1px solid transparent;
+  width: 100%;
+  height: 100%;
+  padding: 1rem; /* 16px */
+  overflow: hidden;
+  position: relative;
+  z-index: 20;
+  transition: border-color 0.3s ease;
+}
+
+/* Hover effect border change */
+.grid-item:hover .card-container {
+  border-color: #475569; /* slate-700 hex approximation */
+}
+
+/* For dark mode border */
+@media (prefers-color-scheme: dark) {
+  .card-container {
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+}
+
+/* Card content wrapper */
+.card-content {
+  position: relative;
+  z-index: 50;
+  padding: 1rem;
+  color: #e0e0e0;
+}
+
+/* Card title styling */
+.card-title {
+  color: #d4d4d8; /* zinc-100 */
+  font-weight: 700; /* font-bold */
+  letter-spacing: 0.05em; /* tracking-wide */
+  margin-top: 1rem;
+  font-size: 1.25rem; /* roughly text-lg */
+}
+
+/* Card description styling */
+.card-description {
+  margin-top: 2rem;
+  color: #9ca3af; /* zinc-400 */
+  letter-spacing: 0.05em; /* tracking-wide */
+  line-height: 1.625; /* leading-relaxed */
+  font-size: 0.875rem; /* text-sm */
+}
