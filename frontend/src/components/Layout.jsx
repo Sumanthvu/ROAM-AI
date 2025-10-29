@@ -23,7 +23,7 @@ const Layout = () => {
     position: "sticky",
     top: 0,
     zIndex: 50,
-    background: "rgba(15, 23, 42, 0.98)",
+    background: "rgba(11, 13, 42, 0.92)",
     borderBottom: "1px solid rgba(55, 65, 81, 0.1)",
     backdropFilter: "blur(8px)",
     height: "72px",
