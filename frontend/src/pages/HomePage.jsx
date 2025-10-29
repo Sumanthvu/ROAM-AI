@@ -1,10 +1,12 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { ContainerScroll } from "../components/ContainerScroll";
+import DynamicSections from "../components/DynamicSections.js"; 
 import "./HomePage.css";
+import "../components/DynamicSections.css"; 
 
 const images = [
   "img.png",
@@ -18,37 +20,6 @@ const images = [
   "/beach3.jpeg",
   "/moun3.jpeg",
 ];
-
-
-// --- Custom Hook for Scroll Animation ---
-const useAnimateOnScroll = (options) => {
-  const ref = useRef(null);
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
-      // This block only runs when the element's visibility changes
-      if (entry.isIntersecting) {
-        setIsVisible(true);
-        // This is the key line: we stop observing after it becomes visible once.
-        observer.unobserve(entry.target);
-      }
-    }, options);
-
-    const currentRef = ref.current;
-    if (currentRef) {
-      observer.observe(currentRef);
-    }
-
-    return () => {
-      if (currentRef) {
-        observer.unobserve(currentRef);
-      }
-    };
-  }, [ref, options]);
-
-  return [ref, isVisible];
-};
 
 const HomePage = () => {
   const { isAuthenticated } = useAuth();
@@ -71,10 +42,8 @@ const HomePage = () => {
     return "position-hidden";
   };
 
-
   return (
     <div className="homepage-container">
-      {/* ... Hero Section and ContainerScroll sections remain unchanged ... */}
       <section className="hero-section">
         <div className="hero-content">
           <h1 className="hero-title">
@@ -126,7 +95,7 @@ const HomePage = () => {
           ))}
         </div>
       </section>
-
+      <DynamicSections />
       <div
         style={{
           display: "flex",
@@ -226,7 +195,7 @@ const HomePage = () => {
         </div>
       </section>
 
-  
+      
     </div>
   );
 };

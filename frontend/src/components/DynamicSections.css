@@ -1,0 +1,182 @@
+/* --- Main Container & Header --- */
+.dynamic-sections-container {
+  padding: 6rem 2rem;
+  background-color: #0F172A;
+  overflow-x: hidden; /* Prevent horizontal scrollbars during animation */
+  position: relative;
+}
+
+/* Add a background glow for visual effect */
+.dynamic-sections-container::before {
+  content: '';
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  width: 800px;
+  height: 800px;
+  background-image: radial-gradient(circle, rgba(99, 102, 241, 0.15), transparent 60%);
+  transform: translateX(-50%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.dynamic-sections-header {
+  text-align: center;
+  margin-bottom: 8rem;
+  position: relative;
+  z-index: 1;
+}
+
+.dynamic-sections-title {
+    font-size: 5rem;
+    font-weight: 1000;
+    display: inline-block;
+    background:linear-gradient(90deg, #7A82FF 0%, #C172F5 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color:transparent ;
+   
+}
+
+.dynamic-sections-subtitle {
+  font-size: 1.3rem;
+  color: #94A3B8;
+  max-width: 70%;
+  margin: 0 auto;
+  font-weight: 550;
+  line-height: 1.7;
+}
+
+/* --- Individual Section Styling --- */
+.dynamic-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+  max-width: 1200px;
+  margin: 10rem auto;
+  opacity: 0; /* Initially hidden */
+  transition: opacity 1s cubic-bezier(0.3, 0.8, 0.2, 1),
+              transform 1s cubic-bezier(0.3, 0.8, 0.2, 1);
+  position: relative;
+  z-index: 1;
+}
+
+/* --- Sideways Animation Logic --- */
+.dynamic-section[data-direction="left"] {
+  transform: translateX(100px);
+}
+.dynamic-section[data-direction="right"] {
+  transform: translateX(-100px);
+}
+.dynamic-section.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Section Layout Variations */
+.dynamic-section.image-left .image-content-wrapper { order: 1; }
+.dynamic-section.image-left .text-content-wrapper { order: 2; }
+.dynamic-section.image-right .image-content-wrapper { order: 2; }
+.dynamic-section.image-right .text-content-wrapper { order: 1; }
+
+/* --- Glassmorphism Text Container --- */
+.text-content-wrapper {
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(129, 140, 248, 0.15);
+  padding: 2.5rem;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  position: relative;
+  z-index: 2;
+  /* Add smooth transitions for the hover effect */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* --- CORRECTED HOVER EFFECT FOR THE CARD --- */
+/* The hover effect now triggers only when hovering the card itself */
+.text-content-wrapper:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.4);
+}
+
+.section-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+  color: #E2E8F0;
+  text-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+}
+
+.section-description {
+  font-size: 1.1rem;
+  color: #94A3B8;
+  line-height: 1.8;
+}
+
+/* --- Enhanced Image Styling --- */
+.image-content-wrapper {
+  /* No perspective needed for simple zoom */
+}
+
+.section-image {
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+  filter: drop-shadow(0 10px 20px rgba(15, 23, 42, 0.5));
+  /* Add a smooth transition for the zoom effect */
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+              filter 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* --- CORRECTED HOVER EFFECT FOR THE IMAGE --- */
+/* The hover effect now triggers only when hovering the image itself */
+.section-image:hover {
+  transform: scale(1.05);
+  filter: drop-shadow(0 20px 35px rgba(99, 102, 241, 0.3));
+}
+
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 900px) {
+  .dynamic-section {
+    grid-template-columns: 1fr; /* Stack on smaller screens */
+    gap: 3rem;
+    margin: 6rem auto;
+    /* On mobile, animate from bottom instead of sides */
+    transform: translateY(100px) !important;
+  }
+
+  .dynamic-section.visible {
+    transform: translateY(0) !important;
+  }
+  
+  .dynamic-section.image-left .image-content-wrapper,
+  .dynamic-section.image-right .image-content-wrapper {
+    order: 1;
+  }
+  
+  .dynamic-section.image-left .text-content-wrapper,
+  .dynamic-section.image-right .text-content-wrapper {
+    order: 2;
+    text-align: center;
+  }
+
+  .dynamic-sections-title {
+    font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .dynamic-sections-container {
+    padding: 4rem 1.5rem;
+  }
+  .dynamic-sections-title {
+    font-size: 2rem;
+  }
+  .section-title {
+    font-size: 2rem;
+  }
+}
