@@ -1,0 +1,187 @@
+/* src/components/PinEffect.css */
+
+.pin-container {
+  position: relative;
+  cursor: pointer;
+  z-index: 50;
+  display: inline-block;
+}
+
+.pin-perspective-wrapper {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: 0.09375rem;
+  margin-top: 1rem;
+  transform: translateX(-50%) translateY(-50%) rotateX(70deg) translateZ(0deg);
+  perspective: 1000px;
+}
+
+.pin-content-container {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  padding: 0.6rem;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  border-radius: 0.4rem; /* 16px */
+  background-color: black;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+  transition: border-color 0.7s ease;
+  overflow: hidden;
+  transform-style: preserve-3d;
+}
+
+.pin-container:hover .pin-content-container {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.pin-content-inner {
+  position: relative;
+  z-index: 50;
+}
+
+.pin-perspective-overlay {
+  pointer-events: none;
+  width: 24rem;  /* 384px */
+  height: 20rem; /* 320px */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.5s;
+  z-index: 60;
+}
+
+.pin-container:hover .pin-perspective-overlay {
+  opacity: 1;
+}
+
+.pin-perspective-overlay-inner {
+  width: 100%;
+  height: 100%;
+  margin-top: -1.75rem; /* -28px */
+  position: relative;
+  inset: 0;
+}
+
+.pin-link-wrapper {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.pin-link {
+  position: relative;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  z-index: 10;
+  border-radius: 9999px; /* rounded-full */
+  background-color: #18181b;
+  padding: 0.125rem 1rem;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1);
+  text-decoration: none;
+}
+
+.pin-link-title {
+  position: relative;
+  z-index: 20;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: bold;
+  display: inline-block;
+  padding: 0.125rem 0;
+}
+
+.pin-link-underline {
+  position: absolute;
+  bottom: 0;
+  left: 1.125rem;
+  height: 1px;
+  width: calc(100% - 2.25rem);
+  background: linear-gradient(to right,
+    rgba(22, 163, 74, 0) 0%,
+    rgba(22, 163, 74, 0.9) 50%,
+    rgba(22, 163, 74, 0) 100%);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.pin-container:hover .pin-link-underline {
+    opacity: 0.4;
+}
+
+.pin-circle-perspective-wrapper {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: 0.09375rem;
+  margin-top: 1rem;
+  transform: translateX(-50%) translateY(-50%) rotateX(70deg) translateZ(0);
+  perspective: 1000px;
+}
+
+.pin-circle {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  height: 11.25rem;
+  width: 11.25rem;
+  border-radius: 50%;
+  background-color: rgba(2, 132, 199, 0.08); /* sky-500/[0.08] */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+}
+
+.pin-line {
+  position: absolute;
+  right: 50%;
+  bottom: 50%;
+  width: 1px;
+  height: 5rem; /* h-20 */
+  background: linear-gradient(to bottom, transparent, #06b6d4); /* cyan-500 */
+  transform: translateY(14px);
+  transition: height 0.3s ease;
+}
+
+.pin-container:hover .pin-line {
+    height: 10rem; /* group-hover:h-40 */
+}
+
+.blurred-line {
+    filter: blur(2px);
+}
+
+.sharp-line {
+    filter: none;
+}
+
+.pin-dot {
+  position: absolute;
+  right: 50%;
+  bottom: 50%;
+  transform: translateY(14px);
+  border-radius: 50%;
+  z-index: 40;
+}
+
+.big-dot {
+  width: 4px;
+  height: 4px;
+  background-color: #0891b2; /* cyan-600 */
+  filter: blur(3px);
+  transform: translateY(14px) translateX(1.5px);
+}
+
+.small-dot {
+  width: 2px;
+  height: 2px;
+  background-color: #67e8f9; /* cyan-300 */
+  transform: translateY(14px) translateX(0.5px);
+}
