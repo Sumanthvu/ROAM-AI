@@ -1,11 +1,8 @@
 // src/components/ItineraryDisplay.jsx
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
-
-// Import the API functions
-import { saveTrip, deleteTrip } from '../api/tripApi';
 
 // Import child components
 import './ItineraryDisplay.css';
@@ -18,59 +15,29 @@ import ReviewsInfo from './ReviewsInfo';
 import Logistics from './Logistics';
 import PrintableItinerary from './PrintableItinerary';
 
-// The function signature is updated to accept the new props alongside the old ones.
-const ItineraryDisplay = ({ place, itinerary, photos, savedDate, tripId, tripPlan, onSaveStatusChange }) => {
+/**
+ * A component to display the final trip itinerary.
+ * It receives all data and functions as props from its parent (DashboardPage).
+ * @param {object} props
+ * @param {string} props.place - The name of the destination.
+ * @param {object} props.itinerary - The comprehensive itinerary object.
+ * @param {string[]} props.photos - An array of photo URLs for the gallery.
+ * @param {boolean} props.isSaved - A boolean indicating if the trip is currently saved.
+ * @param {function} props.onSave - The function to call when the "Save" button is clicked.
+ * @param {function} props.onUnsave - The function to call when the "Unsave" button is clicked.
+ */
+const ItineraryDisplay = ({ place, itinerary, photos, isSaved, onSave, onUnsave }) => {
   const [activeTab, setActiveTab] = useState('timeline');
   const [isDownloading, setIsDownloading] = useState(false);
   const printableRef = useRef();
 
-  // --- NEW: State for Save/Unsave functionality, initialized by the new 'tripId' prop ---
-  const [isSaved, setIsSaved] = useState(!!tripId);
-  const [isSaving, setIsSaving] = useState(false);
-  const [currentTripId, setCurrentTripId] = useState(tripId);
-
-  // Keep the component's state synchronized if the props change
-  useEffect(() => {
-    setIsSaved(!!tripId);
-    setCurrentTripId(tripId);
-  }, [tripId]);
-
-  const formattedDate = new Date(savedDate).toLocaleString('en-US', {
-    year: 'numeric', month: '2-digit', day: '2-digit',
-  });
-  
-  // --- NEW: Handler function for the save/unsave button ---
-  const handleToggleSave = async () => {
-    setIsSaving(true);
-    try {
-      if (isSaved) {
-        // Use 'currentTripId' to delete the trip
-        await deleteTrip(currentTripId);
-        setIsSaved(false);
-        if (onSaveStatusChange) onSaveStatusChange(); // Notify parent
-      } else {
-        // Use the 'tripPlan' object to save the new trip
-        const response = await saveTrip(tripPlan);
-        if (response.success) {
-          const newTrip = response.data;
-          setIsSaved(true);
-          setCurrentTripId(newTrip._id); // Update the ID for future deletes
-          if (onSaveStatusChange) onSaveStatusChange(); // Notify parent
-        }
-      }
-    } catch (error) {
-      console.error("Failed to update trip status:", error);
-    } finally {
-      setIsSaving(false);
-    }
-  };
-
-  // --- (The rest of your logic remains exactly the same) ---
-
   const handleDownloadPdf = async () => {
     setIsDownloading(true);
     const element = printableRef.current;
-    if (!element) return setIsDownloading(false);
+    if (!element) {
+        setIsDownloading(false);
+        return;
+    }
     const canvas = await html2canvas(element, { scale: 2, useCORS: true, logging: false });
     const imgData = canvas.toDataURL('image/png');
     const pdf = new jsPDF('p', 'mm', 'a4');
@@ -104,24 +71,27 @@ const ItineraryDisplay = ({ place, itinerary, photos, savedDate, tripId, tripPla
   return (
     <>
       <div style={{ position: 'absolute', left: '-9999px', top: 0 }}>
-        <PrintableItinerary ref={printableRef} itinerary={itinerary} place={place} photos={photos} savedDate={savedDate} />
+        <PrintableItinerary ref={printableRef} itinerary={itinerary} place={place} photos={photos} />
       </div>
       <div className="itinerary-container">
         <div className="itinerary-header">
           <div>
             <h3 className="itinerary-title">Your Trip to <h1 className='mini-title'> {place} </h1> </h3>
             <p className="itinerary-subtitle">
-              {isSaved ? `Saved on: ${formattedDate}` : 'This trip is not saved to your profile.'}
+              {isSaved ? 'This trip is saved to your profile.' : 'This trip is not saved to your profile.'}
             </p>
           </div>
           
-          {/* --- UPDATED: Container for both buttons --- */}
           <div className="itinerary-actions">
-            {/* <button onClick={handleToggleSave} disabled={isSaving} className={`action-button ${isSaved ? 'save-button-unsave' : 'save-button-save'}`}>
-              {isSaving ? '...' : (isSaved ? 'Unsave Trip' : 'Save to Profile')}
+            {/* --- THIS BUTTON IS NOW CORRECTLY WIRED --- */}
+            {/* It calls the appropriate function passed down from DashboardPage */}
+            <button 
+              onClick={isSaved ? onUnsave : onSave} 
+              className={`save-button action-button ${isSaved ? 'save-button-unsave' : 'save-button-save'}`}
+            >
+              {isSaved ? 'Unsave Trip' : 'Save to Profile'}
             </button>
-            <br />
-            <br /> */}
+            
             <button onClick={handleDownloadPdf} disabled={isDownloading} className="action-button download-button">
               {isDownloading ? 'Downloading...' : 'Download PDF'}
             </button>

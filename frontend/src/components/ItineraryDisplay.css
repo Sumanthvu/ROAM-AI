@@ -1,90 +1,38 @@
 /* src/components/ItineraryDisplay.css */
 
 .itinerary-container {
-  /* width: 100%; */
-  /* REMOVED max-width to go full-screen */
   background-color: #0d121c;
-  color: #e0e0e0; /* UPDATED: Base text color */
-  /* UPDATED: Using viewport units for responsive padding */
-  padding: 4rem 6vw;
-  border: none; /* REMOVED border for a cleaner edge-to-edge look */
-  box-shadow: none; /* REMOVED box-shadow */
-  font-family: 'Inter', sans-serif;
-}
-.mini-title{
-    font-size: 3.5rem;
-      font-weight: 700;
-      display: inline-block;
-      background:linear-gradient(90deg, #7A82FF 0%, #C172F5 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color:transparent ;
-}
-
-.download-button {
-  position: relative;
-  display: inline-block;
-  padding: 12px 36px;
-  font-size: 1rem;
-  font-weight: 600;
+  color: #e0e0e0;
+  padding: 4rem 6vw; /* Responsive padding */
   border: none;
-  border-radius:12px;
-  cursor: pointer;
-  background: linear-gradient(90deg, #1c2063 0%, #3c30c1 100%);
-  color: #fff;
-  letter-spacing: 0.5px;
-  box-shadow: 0 4px 15px rgba(13, 16, 48, 0.4);
-  transition: all 0.3s ease;
-  overflow: hidden;
-}
-
-.download-button:hover {
-  transform: scale(1.08);
-  box-shadow: 0 6px 20px rgba(21, 23, 61, 0.6);
-}
-
-.download-button:active {
-  transform: scale(1.18) ;
-  /* box-shadow: 0 3px 10px rgba(122, 130, 255, 0.4); */
-}
-
-/* Optional gradient glow border effect */
-.download-button::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 50px;
-  padding: 2px;
-  /* background: linear-gradient(90deg, #7A82FF, #C172F5); */
-  -webkit-mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
+  box-shadow: none;
+  font-family: 'Inter', sans-serif;
 }
 
 .itinerary-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 2.5rem; /* Increased spacing */
+  margin-bottom: 2.5rem;
+  flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+  gap: 2rem; /* Add gap for spacing when items wrap */
 }
 
 .itinerary-title {
-  font-size: 2.8rem; /* Slightly larger for more impact */
+  font-size: 2.8rem;
   font-weight: 700;
   margin: 0;
-  color: #FFFFFF; /* UPDATED: Heading color to pure white */
+  color: #FFFFFF;
   letter-spacing: -0.5px;
 }
 
-.itinerary-mini-title{
-  font-size: 3rem;
-      font-weight: 700;
-      display: inline-block;
-      background:linear-gradient(90deg, #7A82FF 0%, #C172F5 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color:transparent ;
+.mini-title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  display: inline-block;
+  background: linear-gradient(90deg, #7A82FF 0%, #C172F5 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .itinerary-subtitle {
@@ -93,11 +41,74 @@
   margin: 0.5rem 0 0;
 }
 
+.itinerary-actions {
+  display: flex;
+  gap: 1.5rem; /* Spacing between buttons */
+  align-items: center;
+  flex-shrink: 0; /* Prevent buttons from shrinking */
+}
+
+/* Shared styles for both buttons */
+.action-button {
+  position: relative;
+  display: inline-block;
+  padding: 12px 28px;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  background: linear-gradient(90deg, #1c2063 0%, #3c30c1 100%);
+  color: #fff;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 15px rgba(13, 16, 48, 0.4);
+  transition: all 0.3s ease;
+  overflow: hidden;
+  text-align: center;
+}
+
+.action-button:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 20px rgba(21, 23, 61, 0.6);
+}
+
+.action-button:active {
+  transform: scale(1.1) ;
+}
+
+.action-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: scale(1);
+}
+
+/* Specific styles for the "Unsave" state */
+.save-button-unsave {
+  background: #2a3b5c;
+  box-shadow: 0 4px 15px rgba(42, 59, 92, 0.4);
+}
+.save-button-unsave:hover {
+  background: #3c517a;
+  box-shadow: 0 6px 20px rgba(42, 59, 92, 0.6);
+}
+
 .itinerary-tabs {
   display: flex;
   gap: 1.5rem;
-  margin-bottom: 3rem; /* Increased spacing */
+  margin-bottom: 3rem;
   border-bottom: 1px solid #2a3b5c;
+  /* For mobile scrolling */
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+/* Hide scrollbar for a cleaner look but keep it functional */
+.itinerary-tabs::-webkit-scrollbar {
+  display: none;
+}
+.itinerary-tabs {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
 
 .itinerary-tabs button {
@@ -110,6 +121,7 @@
   cursor: pointer;
   border-bottom: 3px solid transparent;
   transition: all 0.3s ease;
+  flex-shrink: 0; /* Prevent tabs from shrinking */
 }
 
 .itinerary-tabs button:hover {
@@ -118,8 +130,45 @@
 
 .itinerary-tabs button.active {
   background: linear-gradient(90deg, #7A82FF 0%, #C172F5 100%);
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   font-weight: 600;
-  border-bottom-color: ( #7A82FF 0%, #C172F5 100%)
+  border-bottom-color: #7A82FF; /* Using a solid color for the gradient's start */
+}
+
+
+/* --- RESPONSIVENESS --- */
+
+/* For Tablets and smaller desktops */
+@media (max-width: 992px) {
+  .itinerary-header {
+    flex-direction: column; /* Stack title and buttons vertically */
+    align-items: flex-start; /* Align everything to the left */
+  }
+
+  .itinerary-actions {
+    width: 100%; /* Make buttons container take full width */
+    justify-content: flex-start; /* Align buttons to the left */
+  }
+}
+
+/* For Mobile Phones */
+@media (max-width: 768px) {
+  .itinerary-container {
+    padding: 3rem 5vw; /* Reduce padding on smaller screens */
+  }
+
+  .itinerary-title {
+    font-size: 2.2rem; /* Reduce heading size */
+  }
+
+  .mini-title {
+    font-size: 2.8rem; /* Reduce gradient title size */
+  }
+
+  .itinerary-actions {
+    flex-direction: column; /* Stack buttons vertically on mobile */
+    align-items: stretch; /* Make buttons take full width */
+    gap: 1rem;
+  }
 }
