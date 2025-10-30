@@ -1,0 +1,120 @@
+/* src/components/PrintableItinerary.css */
+/* A dedicated, high-specificity stylesheet for creating a professional B&W PDF. */
+
+/* --- Document Foundation --- */
+.printable-container {
+  width: 210mm; /* Standard A4 width */
+  padding: 15mm;
+  box-sizing: border-box;
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  font-family: Arial, Helvetica, sans-serif; /* Use a standard print-safe font */
+}
+
+/* --- Main Typography --- */
+.printable-container h1, .printable-container h2, .printable-container h3 {
+  color: #000000 !important;
+  font-weight: 700 !important; /* Force bold headings */
+}
+.printable-container p, .printable-container li, .printable-container span {
+  color: #222222 !important; /* Slightly softer black for body text is easier to read */
+  font-size: 10pt;
+  line-height: 1.5;
+}
+.printable-container strong {
+  font-weight: 600 !important;
+  color: #000000 !important;
+}
+
+/* --- PDF Header --- */
+.printable-header {
+  text-align: center;
+  border-bottom: 2px solid #cccccc !important;
+  padding-bottom: 1rem;
+  margin-bottom: 2rem;
+}
+.printable-header h1 {
+  font-size: 24pt;
+  margin: 0;
+}
+.printable-header p {
+  font-size: 11pt;
+  color: #555555 !important;
+  margin-top: 0.5rem;
+}
+
+/* --- Section Styling --- */
+.printable-section {
+  margin-bottom: 1.5rem;
+  page-break-inside: avoid; /* Prevents sections from splitting across pages */
+}
+/* Add a title before each section for clarity */
+.printable-section::before {
+  content: attr(data-section-title);
+  display: block;
+  font-size: 18pt;
+  font-weight: 700;
+  color: #000000;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #dddddd;
+}
+
+/* --- Universal Card & Component Overrides (CRUCIAL) --- */
+/* Reset all cards to a clean, white style */
+.printable-container .safety-card,
+.printable-container .logistics-card,
+.printable-container .budget-card,
+.printable-container .packing-card,
+.printable-container .step-card,
+.printable-container .review-card {
+  background-color: #f7f7f7 !important;
+  border: 1px solid #cccccc !important;
+  border-radius: 8px !important;
+  box-shadow: none !important;
+  padding: 1rem !important;
+  margin-bottom: 1rem;
+}
+
+/* Hide UI elements that don't belong in a PDF */
+.printable-container .itinerary-tabs,
+.printable-container .download-button,
+.printable-container .itinerary-header, /* Hide the on-screen header */
+.printable-container .safety-main-title, /* Hide the on-screen titles as we use ::before */
+.printable-container .logistics-main-title,
+.printable-container .budget-main-title,
+.printable-container .packing-main-title,
+.printable-container .gallery-main-title {
+  display: none !important;
+}
+
+/* --- Specific Component Style Resets --- */
+
+/* Itinerary Timeline */
+.printable-container .day-timeline { border-left-color: #cccccc !important; }
+.printable-container .day-title { font-size: 16pt !important; color: #000000 !important; }
+.printable-container .step-icon-container { background-color: #eeeeee !important; border: 2px solid #ffffff !important; }
+.printable-container .step-icon { filter: grayscale(100%); }
+.printable-container .step-primary-title { font-size: 12pt !important; }
+
+/* Pills & Tags */
+.printable-container .pill,
+.printable-container .card-tag {
+  background-color: #eeeeee !important;
+  color: #000000 !important;
+  border: 1px solid #dddddd !important;
+  padding: 2px 8px;
+  font-size: 8pt !important;
+  border-radius: 4px;
+}
+
+/* Safety Info */
+.printable-container .risk-level-value,
+.printable-container .risk-level-value.risk-low,
+.printable-container .risk-level-value.risk-moderate,
+.printable-container .risk-level-value.risk-high {
+  color: #000000 !important; /* Make all risk levels black */
+}
+.printable-container .safety-card-header svg {
+  stroke: #000000 !important; /* Make icons black */
+}

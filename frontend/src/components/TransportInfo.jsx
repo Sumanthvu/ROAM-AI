@@ -1,38 +1,31 @@
 // src/components/TransportInfo.jsx
 import React from 'react';
-import './InfoTabs.css';
+import './TransportInfo.css'; // New dedicated CSS
 
 const TransportInfo = ({ transport }) => {
   if (!transport) return <p>No transport information available.</p>;
+
   return (
-    <div className="info-tab-container">
-      <div className="info-section">
-        <h4 className="info-title">Getting There (Intercity)</h4>
-        <div className="transport-list">
-          {transport.intercity?.map((item, i) => (
-            <div key={i} className="transport-item">
-              <h5>{item.mode}</h5>
-              <p><strong>From/To:</strong> {item.from} ↔ {item.to}</p>
-              <p><strong>Time:</strong> {item.time} | <strong>Cost:</strong> {item.approx_cost}</p>
-              <p className="tip"><strong>Pro Tip:</strong> {item.pro_tip}</p>
+    <div className="logistics-container">
+      <h2 className="logistics-main-title">Transportation Guide</h2>
+      <div className="logistics-grid">
+        {transport.options?.map((item, i) => (
+          <div key={i} className="logistics-card">
+            <div className="logistics-card-header">
+              <h3>{item.mode}</h3>
             </div>
-          ))}
-        </div>
-      </div>
-      <div className="info-section">
-        <h4 className="info-title">Getting Around (In-City)</h4>
-        <div className="transport-list">
-          {transport.in_city?.map((item, i) => (
-            <div key={i} className="transport-item">
-              <h5>{item.mode}</h5>
-              <p><strong>Best For:</strong> {item.when_to_use}</p>
-              <p><strong>Coverage:</strong> {item.coverage} | <strong>Cost:</strong> {item.approx_cost}</p>
-              <p className="tip"><strong>Pro Tip:</strong> {item.pro_tip}</p>
+            <div className="logistics-card-content">
+              <ul>
+                <li><strong>Typical Journey Time:</strong> {item.time}</li>
+                <li><strong>Estimated Cost:</strong> {item.cost}</li>
+                {item.notes && <li><strong>Notes:</strong> {item.notes}</li>}
+              </ul>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
     </div>
   );
 };
+
 export default TransportInfo;

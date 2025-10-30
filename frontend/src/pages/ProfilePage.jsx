@@ -1,4 +1,7 @@
+// src/pages/ProfilePage.jsx
+
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'; // <-- IMPORT useNavigate
 import { useAuth } from '../context/AuthContext';
 import { getMySavedTrips, deleteTrip } from '../api/tripApi';
 import { updateUserCoverImage } from '../api/userApi';
@@ -8,11 +11,12 @@ import ConfirmationModal from '../components/ConfirmationModal';
 import DotGrid from '../components/DotGrid';
 import { PinContainer } from '../components/PinEffect';
 import SavedTripPinCard from '../components/SavedTripPinCard';
-import ItineraryDetailModal from '../components/ItineraryDetailModal';
+// import ItineraryDetailModal from '../components/ItineraryDetailModal'; // <-- REMOVE
 import './ProfilePage.css';
 
 const ProfilePage = () => {
   const { user, updateUser } = useAuth();
+  const navigate = useNavigate(); // <-- INITIALIZE useNavigate
   const [trips, setTrips] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -22,10 +26,12 @@ const ProfilePage = () => {
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const [tripToDelete, setTripToDelete] = useState(null);
   
-  const [isItineraryModalOpen, setIsItineraryModalOpen] = useState(false);
-  const [selectedTripForModal, setSelectedTripForModal] = useState(null);
+  // --- REMOVE ALL MODAL STATE ---
+  // const [isItineraryModalOpen, setIsItineraryModalOpen] = useState(false);
+  // const [selectedTripForModal, setSelectedTripForModal] = useState(null);
 
   useEffect(() => {
+    // ... (fetchTrips logic remains the same)
     const fetchTrips = async () => { 
       setError(''); 
       setLoading(true); 
@@ -43,11 +49,11 @@ const ProfilePage = () => {
     fetchTrips();
   }, []);
 
+  // ... (delete logic remains the same)
   const openDeleteConfirmation = (tripId) => { 
     setTripToDelete(tripId); 
     setIsConfirmModalOpen(true); 
   };
-  
   const handleConfirmDelete = async () => { 
     if (!tripToDelete) return; 
     try { 
@@ -61,7 +67,8 @@ const ProfilePage = () => {
       setTripToDelete(null); 
     } 
   };
-  
+
+  // ... (image change logic remains the same)
   const handleImageChange = async (file) => { 
     const formData = new FormData(); 
     formData.append('coverImage', file); 
@@ -81,7 +88,6 @@ const ProfilePage = () => {
       setIsAvatarModalOpen(false); 
     } 
   };
-  
   const handleImageRemove = async () => { 
     const formData = new FormData(); 
     setLoading(true); 
@@ -101,15 +107,12 @@ const ProfilePage = () => {
     } 
   };
 
+
+  // --- NEW NAVIGATION HANDLER ---
   const handleShowItinerary = (e, trip) => {
     e.preventDefault();
-    setSelectedTripForModal(trip);
-    setIsItineraryModalOpen(true);
-  };
-
-  const handleCloseItinerary = () => {
-    setIsItineraryModalOpen(false);
-    setSelectedTripForModal(null);
+    // Navigate to the new page, passing the entire trip object in the state
+    navigate(`/trip/${trip._id}`, { state: { trip } });
   };
 
   if (!user) {
@@ -122,10 +125,10 @@ const ProfilePage = () => {
       {isAvatarModalOpen && ( <ProfileImageModal user={user} onClose={() => setIsAvatarModalOpen(false)} onImageChange={handleImageChange} onImageRemove={handleImageRemove} /> )}
       <ConfirmationModal isOpen={isConfirmModalOpen} onClose={() => setIsConfirmModalOpen(false)} onConfirm={handleConfirmDelete} title="Confirm Trip Deletion" message="Are you sure you want to permanently delete this trip itinerary? This action cannot be undone." />
       
-      {isItineraryModalOpen && (
-        <ItineraryDetailModal trip={selectedTripForModal} onClose={handleCloseItinerary} />
-      )}
+      {/* --- REMOVE MODAL COMPONENT --- */}
+      {/* {isItineraryModalOpen && ( <ItineraryDetailModal trip={selectedTripForModal} onClose={handleCloseItinerary} /> )} */}
 
+      {/* ... (profile header JSX remains the same) */}
       <div className="profile-header">
         <DotGrid
           dotSize={4}
@@ -152,6 +155,7 @@ const ProfilePage = () => {
         </div>
       </div>
 
+
       <div className="saved-trips-section">
         <h2 className="section-title">My Saved Itineraries</h2>
         {message && <p className="success-message">{message}</p>}
@@ -161,8 +165,9 @@ const ProfilePage = () => {
         ) : (
           <div className="saved-trips-grid">
             {trips.map((trip) => (
+              // --- UPDATE onClick and PinContainer ---
               <div key={trip._id} onClick={(e) => handleShowItinerary(e, trip)}>
-                <PinContainer title="Show Itinerary" href="#">
+                <PinContainer title="View Itinerary" href={`/trip/${trip._id}`}>
                   <SavedTripPinCard 
                     trip={trip} 
                     onDelete={openDeleteConfirmation}

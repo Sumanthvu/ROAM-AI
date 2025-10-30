@@ -1,0 +1,53 @@
+/* src/components/PackingList.css */
+.packing-container {
+  width: 100%;
+}
+.packing-main-title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0 0 2.5rem 0;
+}
+.packing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+.packing-card {
+  background-color: #141a2a;
+  border-radius: 12px;
+  padding: 1.5rem 1.75rem;
+  border: 1px solid #2a3b5c;
+}
+.packing-card-header h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  background: linear-gradient(90deg, #7A82FF 0%, #C172F5 100%);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+
+  margin: 0 0 1rem 0;
+}
+.packing-card-content ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  font-size: 0.95rem;
+  color: #e0e0e0;
+}
+.packing-card-content li {
+  display: flex;
+  flex-direction: column;
+}
+.packing-card-content li strong {
+  color: #ffffff;
+  font-weight: 500;
+}
+.packing-reason {
+  font-style: italic;
+  font-size: 0.85rem;
+  padding-left: 0.25rem;
+}

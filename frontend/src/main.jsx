@@ -11,12 +11,11 @@ import DashboardPage from "./pages/DashBoardPage.jsx";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage.jsx";
 import ResetPasswordPage from "./pages/ResetPasswordPage.jsx";
 import ProfilePage from "./pages/ProfilePage.jsx";
+import ItineraryPage from "./pages/ItineraryPage.jsx"; // <-- IMPORT THE NEW PAGE
 
 import Layout from "./components/Layout.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import { AuthProvider } from "./context/AuthContext.jsx";
-import LoginPage from "./pages/LoginPage.jsx";
-import RegisterPage from "./pages/RegisterPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -30,8 +29,7 @@ const router = createBrowserRouter([
         path: "/profile",
         element: (
           <ProtectedRoute>
-            {" "}
-            <ProfilePage />{" "}
+            <ProfilePage />
           </ProtectedRoute>
         ),
       },
@@ -39,14 +37,21 @@ const router = createBrowserRouter([
         path: "/dashboard",
         element: (
           <ProtectedRoute>
-            {" "}
-            <DashboardPage />{" "}
+            <DashboardPage />
+          </ProtectedRoute>
+        ),
+      },
+      // --- NEW ITINERARY ROUTE ---
+      {
+        path: "/trip/:tripId",
+        element: (
+          <ProtectedRoute>
+            <ItineraryPage />
           </ProtectedRoute>
         ),
       },
     ],
   },
-  // --- NEW: Standalone routes for the AuthPage ---
   {
     path: "/login",
     element: <AuthPage />,

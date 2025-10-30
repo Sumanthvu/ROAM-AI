@@ -1,78 +1,102 @@
-/* src/components/ItineraryTimeline.css */
-
 .timeline-container {
   display: flex;
   flex-direction: column;
-  gap: 2.5rem;
+  gap: 3rem;
 }
-
-.day-container {
+.day-wrapper {
   position: relative;
-  padding-left: 50px; /* Space for the timeline line */
-  border-left: 4px solid #e2e8f0;
 }
-
-.day-title-timeline {
+.day-title {
   font-size: 1.8rem;
-  font-weight: 700;
-  color: #5a67d8;
-  margin: 0 0 2rem -50px; /* Position it over the line */
-  background-color: #f7fafc;
-  display: inline-block;
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
+  font-weight: 600;
+  background: linear-gradient(90deg, #7A82FF 0%, #C172F5 100%);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+  margin: 0 0 2rem 0;
 }
-
-.step-container {
+.day-timeline {
+  position: relative;
+  padding-left: 50px;
+  border-left: 2px solid #2a3b5c;
+}
+.step-wrapper {
   display: flex;
-  gap: 1.5rem;
+  align-items: flex-start;
   position: relative;
-  margin-bottom: 2rem;
 }
-
-.step-icon {
+.step-wrapper:not(:last-child) {
+  padding-bottom: 2rem;
+}
+.step-icon-container {
   position: absolute;
-  left: -73px; /* Center the icon on the timeline */
+  left: -21px;
   top: 0;
-  font-size: 1.8rem;
-  background-color: #ffffff;
-  padding: 0.5rem;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 4px solid #e2e8f0;
+  width: 40px;
+  height: 40px;
+  background-color: #e54b63;
+  border-radius: 50%;
+  border: 3px solid #0d121c;
 }
-
-.step-content-wrapper {
-  flex: 1;
+.step-icon {
+  font-size: 1.2rem;
 }
-
-.step-time-range {
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: #718096;
-  margin-bottom: 0.5rem;
+.step-card {
+  width: 100%;
+  background-color: #141a2a;
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  border: 1px solid #2a3b5c;
 }
-
-.step-details .step-primary {
+.step-header {
+  margin-bottom: 1rem;
+}
+.step-primary-title {
   font-size: 1.2rem;
   font-weight: 600;
+  color: #ffffff;
   margin: 0 0 0.25rem;
-  color: #2d3748;
+  text-transform: capitalize;
 }
-
-.step-details .step-secondary {
-  font-size: 1rem;
-  color: #4a5568;
-  margin: 0;
-  line-height: 1.5;
-}
-
-.step-details .step-suggestion {
+.step-time {
   font-size: 0.9rem;
-  color: #718096;
-  margin: 0.25rem 0 0 1rem;
+  color: #8a9cb4;
+  margin: 0;
+}
+.step-body {
+  color: #e0e0e0;
+}
+.step-suggestion-title {
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 0.5rem;
+}
+.step-reason {
+  font-style: italic;
+  color: #e0e0e0;
+  padding-left: 1rem;
+  border-left: 2px solid #0d1271;
+  margin: 0;
+}
+.step-suggestion {
+  color: #e0e0e0;
+  margin: 0.25rem 0;
+  font-size: 0.95rem;
+}
+.step-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+.pill {
+  display: inline-block;
+  padding: 0.3rem 0.8rem;
+  background-color: #1d4a52;
+  color: #94e9e3;
+  border-radius: 15px;
+  font-size: 0.85rem;
+  font-weight: 500;
 }

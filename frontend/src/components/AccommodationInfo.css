@@ -1,0 +1,78 @@
+.logistics-container {
+  width: 100%;
+}
+
+.logistics-main-title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0 0 2.5rem 0;
+}
+
+.logistics-sub-title {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #e0e0e0;
+  margin: 3rem 0 1.5rem 0;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #2a3b5c;
+}
+
+.logistics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+.logistics-card {
+  background-color: #141a2a;
+  border-radius: 12px;
+  padding: 1.5rem 1.75rem;
+  border: 1px solid #2a3b5c;
+}
+
+.logistics-card-header {
+  margin: 0 0 1rem 0;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #2a3b5c;
+}
+
+.logistics-card-header h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #e0e0e0;
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-tag {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #94e9e3;
+  background-color: #1d4a52;
+  padding: 0.25rem 0.6rem;
+  border-radius: 12px;
+}
+
+.logistics-card-content ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  font-size: 0.95rem;
+  color: #8a9cb4;
+}
+
+.logistics-card-content li strong {
+  color: #c0c0c0;
+  font-weight: 500;
+}
+
+.logistics-card-content li.tip {
+  margin-top: 0.5rem;
+  font-style: italic;
+}

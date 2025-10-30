@@ -1,23 +1,28 @@
 /* src/components/InfoTabs.css */
+/* Uses variables from ItineraryDisplay.css */
 
 .info-tab-container {
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
 .info-section {
-  background-color: #f7fafc;
-  padding: 1.5rem;
-  border-radius: 8px;
-  border: 1px solid #e2e8f0;
+  background-color: var(--secondary-bg);
+  padding: 1.5rem 2rem;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
 }
 
 .info-title {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: #2d3748;
-  margin: 0 0 1rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary-text);
+  margin: 0 0 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .info-list {
@@ -25,124 +30,143 @@
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-  color: #4a5568;
+  gap: 1rem;
+  color: var(--secondary-text);
+  font-size: 1rem;
 }
 
 .info-list li::marker {
-  color: #5a67d8;
+  color: var(--accent-color);
+}
+.info-list li strong {
+  color: var(--primary-text);
+  font-weight: 600;
+}
+.info-list li em {
+  color: var(--secondary-text);
+  font-style: italic;
 }
 
-/* Specific to SafetyInfo */
+/* === SPECIFIC COMPONENT STYLES === */
+
+/* SafetyInfo */
 .risk-level {
   font-weight: bold;
-  padding: 0.2rem 0.6rem;
-  border-radius: 6px;
+  padding: 0.3rem 0.8rem;
+  border-radius: 8px;
   color: #fff;
   font-size: 1rem;
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 0.5rem;
 }
-.risk-level.low { background-color: #38a169; }
-.risk-level.moderate { background-color: #dd6b20; }
-.risk-level.high { background-color: #e53e3e; }
+.risk-level.low { background-color: #238636; }
+.risk-level.moderate { background-color: #b0882c; }
+.risk-level.high { background-color: #da3633; }
 
 .contacts-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  color: var(--secondary-text);
 }
+.contact-item strong { color: var(--primary-text); }
 
-.contact-item span {
-  font-weight: 500;
-  color: #4a5568;
-}
-
-/* Styles for PackingList (we'll create this component next) */
+/* PackingList */
 .packing-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
 }
-
 .packing-category-title {
-  font-size: 1.1rem;
+  font-size: 1.25rem;
   font-weight: 600;
-  color: #5a67d8;
+  color: var(--accent-color);
   margin-bottom: 1rem;
 }
 
-/* Styles for BudgetBreakdown (we'll create this component next) */
+/* BudgetBreakdown */
 .budget-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
 }
 
 .budget-notes {
-  grid-column: 1 / -1; /* Make notes span full width */
-  background-color: #edf2f7;
-  padding: 1rem;
-  border-radius: 8px;
+  grid-column: 1 / -1;
+  background-color: rgba(139, 92, 246, 0.05); /* Faint accent color */
+  border: 1px solid rgba(139, 92, 246, 0.2);
 }
 
+/* ImagesTab */
 .image-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 1rem;
 }
-
+.image-wrapper {
+  overflow: hidden;
+  border-radius: 12px;
+}
 .image-wrapper img {
   width: 100%;
-  height: 200px;
+  height: 220px;
   object-fit: cover;
-  border-radius: 8px;
-  transition: transform 0.3s ease;
+  transition: transform 0.4s ease, filter 0.4s ease;
 }
-
 .image-wrapper img:hover {
-  transform: scale(1.05);
+  transform: scale(1.1);
+  filter: brightness(1.1);
 }
 
-
-.review-grid {
+/* ReviewsInfo, AccommodationInfo, TransportInfo Cards */
+.review-grid, .stay-grid, .transport-list {
   display: grid;
-  gap: 1rem;
+  gap: 1.5rem;
 }
-.review-card {
-  background-color: #edf2f7;
-  padding: 1rem;
+.review-card, .stay-card, .transport-item {
+  background-color: var(--primary-bg);
+  padding: 1.25rem;
   border-radius: 8px;
+  border: 1px solid var(--border-color);
+  transition: border-color 0.3s ease, transform 0.3s ease;
 }
-.review-card h5 {
-  margin: 0 0 0.5rem;
+.review-card:hover, .stay-card:hover, .transport-item:hover {
+  border-color: var(--accent-color);
+  transform: translateY(-3px);
+}
+
+.review-card h5, .stay-card h5, .transport-item h5 {
+  margin: 0 0 0.75rem;
   font-size: 1.1rem;
+  color: var(--primary-text);
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
-.review-card p { margin: 0.25rem 0; }
-.tip { color: #2d3748; font-style: italic; }
+.review-card h5 span, .stay-card h5 span {
+  font-size: 0.9rem;
+  color: var(--secondary-text);
+  font-weight: 400;
+}
 
-/* Styles for TransportInfo */
-.transport-list {
-  display: grid;
-  gap: 1rem;
+.review-card p, .stay-card p, .transport-item p {
+  margin: 0.4rem 0;
+  color: var(--secondary-text);
+  line-height: 1.6;
 }
-.transport-item {
-  background-color: #edf2f7;
-  padding: 1rem;
-  border-radius: 8px;
-}
-.transport-item h5 { margin: 0 0 0.5rem; }
-.transport-item p { margin: 0.25rem 0; }
 
-/* Styles for AccommodationInfo */
-.stay-grid {
-  display: grid;
-  gap: 1rem;
+.review-card p strong, .stay-card p strong, .transport-item p strong {
+  color: var(--primary-text);
+  font-weight: 500;
 }
-.stay-card {
-  background-color: #edf2f7;
-  padding: 1rem;
-  border-radius: 8px;
+
+.tip {
+  margin-top: 1rem !important;
+  padding: 0.75rem 1rem;
+  background-color: rgba(139, 92, 246, 0.08);
+  border-left: 3px solid var(--accent-color);
+  border-radius: 0 4px 4px 0;
+  color: #c9d1d9 !important;
+  font-style: italic;
 }
-.stay-card h5 { margin: 0 0 0.5rem; }
-.stay-card p { margin: 0.25rem 0; }

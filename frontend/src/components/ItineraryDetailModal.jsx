@@ -1,24 +1,41 @@
-import React from 'react';
-import ItineraryDisplay from './ItineraryDisplay';
-import './ItineraryDetailModal.css';
+// src/components/ItineraryDetailModal.jsx
 
-const ItineraryDetailModal = ({ trip, onClose }) => {
+import React from "react";
+import ItineraryDisplay from "./ItineraryDisplay";
+import "./ItineraryDetailModal.css";
+
+// It now accepts an 'onSave' prop from its parent (e.g., ProfilePage)
+const ItineraryDetailModal = ({ trip, onClose, onSave }) => {
   if (!trip) return null;
 
-  const { tripPlan } = trip;
-  const { selected_place, itinerary } = tripPlan;
+  const { tripPlan, savedDate } = trip;
+  const { selected_place, itinerary, photos } = tripPlan;
 
-  // The main change is wrapping the ItineraryDisplay in a container
-  // to allow for independent scrolling within the styled modal.
+  // This function will be passed to ItineraryDisplay to notify us when a save/unsave happens.
+  const handleSaveStatusChange = () => {
+    if (onSave) {
+      onSave(); // This calls the function in the parent component to refresh the trip list.
+    }
+  };
+
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-container" onClick={(e) => e.stopPropagation()}>
-        <button className="modal-close-button" onClick={onClose}>×</button>
+        <button className="modal-close-button" onClick={onClose}>
+          ×
+        </button>
         <div className="modal-content-scrollable">
           <ItineraryDisplay
+            // --- EXISTING PROPS (UNCHANGED) ---
             place={selected_place}
             itinerary={itinerary}
-            onSave={() => {}} // onSave is not needed in the modal
+            photos={photos}
+            savedDate={savedDate}
+
+            // --- NEW PROPS ADDED FOR SAVE FUNCTIONALITY ---
+            tripId={trip._id} // The ID is needed to know if it's saved and to delete it.
+            tripPlan={tripPlan} // The full plan is needed to save it.
+            onSaveStatusChange={handleSaveStatusChange} // The callback function.
           />
         </div>
       </div>
