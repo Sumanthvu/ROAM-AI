@@ -1,0 +1,72 @@
+
+
+.floating-background-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  overflow: hidden; 
+  pointer-events: none;
+}
+
+.shape {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(142, 93, 240, 0.2), transparent 70%);
+  filter: blur(10px); 
+  animation: float 0.1s infinite linear alternate;
+}
+
+@keyframes float {
+  from {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  to {
+    transform: translate(150px, -200px) rotate(270deg);
+  }
+}
+
+.shape:nth-child(1) {
+  width: 200px;
+  height: 200px;
+  left: 10%;
+  bottom: -50px;
+  animation-duration: 35s;
+}
+
+.shape:nth-child(2) {
+  width: 150px;
+  height: 150px;
+  left: 80%;
+  top: -40px;
+  animation-duration: 28s;
+  animation-delay: -5s; 
+}
+
+.shape:nth-child(3) {
+  width: 100px;
+  height: 100px;
+  left: 50%;
+  bottom: -30px;
+  animation-duration: 22s;
+}
+
+.shape:nth-child(4) {
+  width: 250px;
+  height: 250px;
+  left: 25%;
+  top: -80px;
+  animation-duration: 40s;
+  animation-delay: -10s;
+}
+
+.shape:nth-child(5) {
+  width: 80px;
+  height: 80px;
+  left: 90%;
+  bottom: 10%;
+  animation-duration: 18s;
+  animation-delay: -3s;
+}

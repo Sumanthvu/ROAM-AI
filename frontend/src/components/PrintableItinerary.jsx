@@ -12,9 +12,22 @@ import ReviewsInfo from './ReviewsInfo'; // Added for a more complete PDF
 
 const PrintableItinerary = React.forwardRef(({ itinerary, place, photos, savedDate }, ref) => {
     
-  const formattedDate = new Date(savedDate).toLocaleString('en-US', {
-    year: 'numeric', month: 'long', day: 'numeric'
-  });
+//   const formattedDate = new Date(savedDate).toLocaleString('en-US', {
+//     year: 'numeric', month: 'long', day: 'numeric'
+//   });
+
+const formattedDate = savedDate
+  ? new Date(savedDate).toLocaleString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    })
+  : new Date().toLocaleString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+
 
   return (
     <div ref={ref} className="printable-container">
@@ -46,7 +59,7 @@ const PrintableItinerary = React.forwardRef(({ itinerary, place, photos, savedDa
       <div className="printable-section" data-section-title="Attraction & Restaurant Reviews">
         <ReviewsInfo reviews={itinerary.reviews} />
       </div>
-      
+
       <div className="printable-section" data-section-title="Image Gallery">
         <ImagesTab photos={photos} placeName={place} />
       </div>

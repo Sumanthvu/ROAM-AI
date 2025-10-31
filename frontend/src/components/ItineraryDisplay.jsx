@@ -31,23 +31,68 @@ const ItineraryDisplay = ({ place, itinerary, photos, isSaved, onSave, onUnsave 
   const [isDownloading, setIsDownloading] = useState(false);
   const printableRef = useRef();
 
+  // const handleDownloadPdf = async () => {
+  //   setIsDownloading(true);
+  //   const element = printableRef.current;
+  //   if (!element) {
+  //       setIsDownloading(false);
+  //       return;
+  //   }
+  //   const canvas = await html2canvas(element, { scale: 2, useCORS: true, logging: false });
+  //   const imgData = canvas.toDataURL('image/png');
+  //   const pdf = new jsPDF('p', 'mm', 'a4');
+  //   const pdfWidth = pdf.internal.pageSize.getWidth();
+  //   const ratio = canvas.width / canvas.height;
+  //   const imgHeight = pdfWidth / ratio;
+  //   pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, imgHeight);
+  //   pdf.save(`Itinerary for ${place}.pdf`);
+  //   setIsDownloading(false);
+  // };
+
   const handleDownloadPdf = async () => {
-    setIsDownloading(true);
-    const element = printableRef.current;
-    if (!element) {
-        setIsDownloading(false);
-        return;
-    }
-    const canvas = await html2canvas(element, { scale: 2, useCORS: true, logging: false });
-    const imgData = canvas.toDataURL('image/png');
-    const pdf = new jsPDF('p', 'mm', 'a4');
-    const pdfWidth = pdf.internal.pageSize.getWidth();
-    const ratio = canvas.width / canvas.height;
-    const imgHeight = pdfWidth / ratio;
-    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, imgHeight);
-    pdf.save(`Itinerary for ${place}.pdf`);
+  setIsDownloading(true);
+
+  const element = printableRef.current;
+  if (!element) {
     setIsDownloading(false);
-  };
+    return;
+  }
+
+  // Generate canvas
+  const canvas = await html2canvas(element, {
+    scale: 2,
+    useCORS: true,
+    logging: false
+  });
+
+  const imgData = canvas.toDataURL("image/png");
+
+  const pdf = new jsPDF("p", "mm", "a4");
+  const pdfWidth = pdf.internal.pageSize.getWidth();
+  const pdfHeight = pdf.internal.pageSize.getHeight();
+
+  // image dimensions in PDF space
+  const imgWidth = pdfWidth;
+  const imgHeight = (canvas.height * pdfWidth) / canvas.width;
+
+  let heightLeft = imgHeight;
+  let position = 0;
+
+  // First page
+  pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+  heightLeft -= pdfHeight;
+
+  // Extra pages
+  while (heightLeft > 0) {
+    position = heightLeft - imgHeight;
+    pdf.addPage();
+    pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+    heightLeft -= pdfHeight;
+  }
+
+  pdf.save(`Itinerary_${place}.pdf`);
+  setIsDownloading(false);
+};
 
   const renderTabContent = () => {
     if (!itinerary) return <p>Loading content...</p>;
@@ -91,7 +136,7 @@ const ItineraryDisplay = ({ place, itinerary, photos, isSaved, onSave, onUnsave 
             >
               {isSaved ? 'Unsave Trip' : 'Save to Profile'}
             </button>
-            
+
             <button onClick={handleDownloadPdf} disabled={isDownloading} className="action-button download-button">
               {isDownloading ? 'Downloading...' : 'Download PDF'}
             </button>

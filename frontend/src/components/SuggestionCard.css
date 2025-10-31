@@ -1,34 +1,54 @@
-/* src/components/SuggestionCard.css */
+/*
+ * SuggestionCard Styles V3
+ * - Sophisticated Navy/Slate/Teal Color Palette
+ * - 'Inter' Font for Improved Typography
+ * - Refined Hover & UI Elements
+ */
+
+/* Add this to your main index.css or App.css to set the font globally */
+:root {
+  font-family: 'Inter', sans-serif;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
 .suggestion-card {
-  background-color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  background-color: #112240; /* Lighter navy-slate for the card surface */
+  color: #ccd6f6; /* Light slate text for readability */
+  border-radius: 12px; /* Softened border radius */
+  box-shadow: 0 10px 30px -15px rgba(2, 12, 27, 0.7);
   overflow: hidden;
   display: flex;
   flex-direction: column;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: fadeIn 0.5s ease-out forwards;
+  border: 1px solid #1e2d4b;
 }
 
 .suggestion-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  transform: translateY(-8px);
+  box-shadow: 0 20px 30px -15px rgba(2, 12, 27, 0.7);
 }
 
 .card-image-container {
-  height: 200px;
+  height: 220px;
   overflow: hidden;
+  position: relative;
 }
 
 .card-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.4s ease;
+  transition: transform 0.4s ease, filter 0.4s ease;
 }
 
 .suggestion-card:hover .card-image {
   transform: scale(1.05);
+  filter: brightness(1.1);
 }
 
 .card-content {
@@ -39,76 +59,85 @@
 }
 
 .card-title {
+  font-family: 'Inter', sans-serif;
   font-size: 1.5rem;
   font-weight: 700;
-  color: #1a202c;
+  color: #e6f1ff; /* Brightest text for titles */
   margin: 0 0 0.5rem;
+  letter-spacing: 0.5px;
 }
 
 .card-reason {
-  font-size: 1rem;
-  color: #718096;
-  margin-bottom: 1rem;
+  font-size: 0.95rem;
+  color: #8892b0; /* Softer slate-gray for descriptions */
+  margin-bottom: 1.5rem;
   flex-grow: 1;
+  line-height: 1.5;
 }
 
 .card-details {
   font-size: 0.9rem;
-  color: #4a5568;
+  color: #a8b2d1;
   margin-bottom: 1.5rem;
 }
 
 .card-details p {
-  margin: 0.4rem 0;
+  margin: 0.5rem 0;
+}
+
+.card-details strong {
+  color: #8892b0;
+  font-weight: 600;
 }
 
 .safety-rating {
-  font-weight: bold;
-  padding: 0.2rem 0.5rem;
+  font-weight: 600;
+  padding: 0.25rem 0.6rem;
   border-radius: 6px;
-  color: #fff;
+  color: #0a192f; /* Dark text for contrast on bright bg */
+  font-size: 0.8rem;
 }
-.safety-rating.high { background-color: #38a169; }
-.safety-rating.moderate { background-color: #dd6b20; }
-.safety-rating.low { background-color: #e53e3e; }
 
+.safety-rating.high { background-color: #0906cf; } /* Teal accent */
+.safety-rating.moderate { background-color: #ffc107; } /* A fitting yellow */
+.safety-rating.low { background-color: #f97583; } /* A fitting red */
 
 .select-place-button {
-  background-color: #5a67d8;
-  color: white;
-  padding: 0.7rem 1rem;
-  border: none;
+  background-color:#0906cf ;
+  color: #ffffff; /* Teal accent color */
+  padding: 0.8rem 1.2rem;
+  border: 1px solid #0906cf;
   border-radius: 8px;
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 500;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: all 0.3s ease;
   text-align: center;
-  margin-top: auto; /* Pushes button to the bottom */
+  margin-top: auto;
 }
 
 .select-place-button:hover {
-  background-color: #434190;
+  background-color: rgba(73, 103, 255, 0.1); /* Teal background tint */
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(100, 255, 218, 0.1);
 }
 
-.card-image-container {
-  position: relative; /* Required for positioning carousel buttons */
-}
+/* --- Carousel styles remain largely the same, just minor tweaks if needed --- */
+.card-image-container::after { display: none; } /* Removing the gradient as it's not needed now */
 
 .carousel-button {
+  background-color: rgba(17, 34, 64, 0.7); /* Match card background */
+  border: 1px solid #273d95;
+  backdrop-filter: blur(5px);
+  /* other styles are fine */
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background-color: rgba(0, 0, 0, 0.5);
-  color: white;
-  border: none;
+  color: #081a52;
   font-size: 1.5rem;
-  font-weight: bold;
   cursor: pointer;
-  padding: 0.5rem 1rem;
   border-radius: 50%;
-  line-height: 1;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.3s ease;
   z-index: 10;
   width: 40px;
   height: 40px;
@@ -116,26 +145,19 @@
   align-items: center;
   justify-content: center;
 }
-
-.carousel-button:hover {
-  background-color: rgba(0, 0, 0, 0.8);
-}
-
-.carousel-button.prev {
-  left: 10px;
-}
-
-.carousel-button.next {
-  right: 10px;
-}
+.carousel-button.prev { left: 12px; }
+.carousel-button.next { right: 12px; }
 
 .image-counter {
+  background-color: rgba(17, 34, 64, 0.8); /* Match card background */
+  border: 1px solid #303c55;
+  backdrop-filter: blur(5px);
+  /* other styles are fine */
   position: absolute;
   bottom: 10px;
   right: 10px;
-  background-color: rgba(0, 0, 0, 0.7);
-  color: white;
-  padding: 0.25rem 0.6rem;
+  color: #ccd6f6;
+  padding: 0.3rem 0.7rem;
   border-radius: 12px;
   font-size: 0.8rem;
   font-weight: 600;
@@ -143,16 +165,11 @@
 }
 
 .placeholder-image {
-  width: 100%;
-  height: 100%;
-  background-color: #e2e8f0;
+  background-color: #0a192f;
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  height: 100%;
 }
-
-.placeholder-image span {
-  color: #718096;
-  font-weight: 600;
-  font-size: 1rem;
-}
+.placeholder-image span { color: #8892b0; font-weight: 600; font-size: 1rem; }

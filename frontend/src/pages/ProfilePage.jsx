@@ -11,6 +11,7 @@ import ConfirmationModal from '../components/ConfirmationModal';
 import DotGrid from '../components/DotGrid';
 import { PinContainer } from '../components/PinEffect';
 import SavedTripPinCard from '../components/SavedTripPinCard';
+import FloatingBackground from '../components/FloatingBackground';
 // import ItineraryDetailModal from '../components/ItineraryDetailModal'; // <-- REMOVE
 import './ProfilePage.css';
 
@@ -130,7 +131,7 @@ const ProfilePage = () => {
 
       {/* ... (profile header JSX remains the same) */}
       <div className="profile-header">
-        <DotGrid
+        {/* <DotGrid
           dotSize={4}
           gap={12}
           baseColor="#1e293b" 
@@ -140,7 +141,8 @@ const ProfilePage = () => {
           shockStrength={10}
           resistance={750}
           returnDuration={1.5}
-        />
+        /> */}
+         <FloatingBackground />
         <div className="profile-avatar-wrapper" onClick={() => setIsAvatarModalOpen(true)}>
           <img 
             src={user.coverImage || `data:image/jpeg;base64,...`} 

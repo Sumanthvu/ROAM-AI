@@ -1,39 +1,55 @@
-/* src/components/LocalInfoSelector.css */
+/*
+ * LocalInfoSelector Styles V3
+ * - Sophisticated Navy/Slate/Teal Color Palette
+ * - 'Inter' Font for Improved Typography
+ * - Glowing Custom Checkboxes
+ */
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
 .selector-container {
-  background-color: #ffffff;
+  background-color: #112240; /* Card surface color */
+  color: #ccd6f6;
   padding: 2.5rem;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 10px 30px -15px rgba(2, 12, 27, 0.7);
   margin-bottom: 2rem;
+  border: 1px solid #1e2d4b;
+  animation: fadeIn 0.5s ease-out forwards;
 }
 
 .selector-title {
   text-align: center;
-  font-size: 2rem;
+  font-size: 2.25rem;
   font-weight: 700;
-  margin-bottom: 0.5rem;
+  color: #e6f1ff;
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.5px;
 }
 
 .selector-subtitle {
   text-align: center;
   font-size: 1.1rem;
-  color: #718096;
-  margin-bottom: 2.5rem;
+  color: #8892b0;
+  margin-bottom: 3rem;
 }
 
 .selection-columns {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2.5rem;
 }
 
 .column-title {
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   font-weight: 600;
-  margin-bottom: 1rem;
-  border-bottom: 2px solid #e2e8f0;
-  padding-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
+  color: #ccd6f6;
+  border-bottom: 1px solid #303c55; /* Subtle navy-gray border */
+  padding-bottom: 0.75rem;
 }
 
 .items-list {
@@ -44,36 +60,76 @@
 
 .item-card {
   display: flex;
-  align-items: flex-start;
-  gap: 1rem;
-  background-color: #f7fafc;
-  padding: 1rem;
+  background-color: #0a192f; /* Darkest navy for item cards */
+  padding: 1.25rem;
   border-radius: 8px;
-  border: 1px solid #e2e8f0;
-}
-
-.item-card input[type="checkbox"] {
-  margin-top: 5px;
-  width: 18px;
-  height: 18px;
+  border: 1px solid #303c55;
+  transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
   cursor: pointer;
 }
 
+.item-card:hover {
+  background-color: #112240;
+  border-color: #0906cf; /* Highlight with accent color on hover */
+  transform: translateY(-4px);
+}
+
+.item-card input[type="checkbox"] {
+  display: none; /* Hide the default checkbox */
+}
+
+/* Custom Checkbox Design */
 .item-card label {
   display: flex;
-  flex-direction: column;
+  gap: 1.25rem;
+  align-items: flex-start;
   cursor: pointer;
   width: 100%;
 }
 
+.item-card label::before {
+  content: '';
+  min-width: 22px;
+  height: 22px;
+  border: 2px solid #8892b0;
+  border-radius: 6px;
+  margin-top: 3px;
+  display: inline-block;
+  transition: all 0.3s ease;
+}
+
+/* Checked State for Custom Checkbox */
+.item-card input[type="checkbox"]:checked + label::before {
+  border-color: #0906cf;
+  background-color: #0906cf;
+  background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='%230a192f' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e");
+  background-position: center;
+  background-repeat: no-repeat;
+  box-shadow: 0 0 10px rgba(100, 134, 255, 0.5); /* Glowing effect */
+}
+
+/* Changes on the text when selected */
+.item-card input[type="checkbox"]:checked + label .item-name {
+  color: #bebdcd;
+}
+
+.item-card label > div {
+  display: flex;
+  flex-direction: column;
+}
+
 .item-name {
   font-weight: 600;
-  color: #2d3748;
-  font-size: 1rem;
+  color: #ccd6f6;
+  font-size: 1.1rem;
+  transition: color 0.3s ease;
+  line-height: 1.5;
 }
 
 .item-description {
   font-size: 0.9rem;
-  color: #718096;
+  color: #8892b0;
   margin-top: 0.25rem;
+  line-height: 1.6;
+  transition: color 0.3s ease;
 }
