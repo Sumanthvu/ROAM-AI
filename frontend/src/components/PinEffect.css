@@ -1,11 +1,21 @@
 /* src/components/PinEffect.css */
 
-.pin-container {
+/* .pin-container {
   position: relative;
   cursor: pointer;
   z-index: 50;
   display: inline-block;
   width: 100%; /* Added to ensure full width */
+/* } */ 
+
+.pin-container {
+  position: relative;
+  cursor: pointer;
+  z-index: 50;
+  display: inline-block;
+  /* ADD width and height to the container */
+  width: 380px;
+  height: 420px; /* Use the height from the card */
 }
 
 .pin-perspective-wrapper {
@@ -20,8 +30,10 @@
 
 .pin-content-container {
   position: absolute;
+  /* position: relative; */
   left: 50%;
   top: 50%;
+  height: 100%;
   padding: 0.6rem;
   display: flex;
   justify-content: flex-start;
