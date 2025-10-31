@@ -18,9 +18,9 @@
 }
 
 .pin-content-container {
-  position: absolute;
-  left: 50%;
-  top: 50%;
+  position: relative;
+  /* left: 50%; */
+  /* top: 50%; */
   padding: 0.6rem;
   display: flex;
   justify-content: flex-start;
