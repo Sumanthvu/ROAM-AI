@@ -5,6 +5,7 @@
   cursor: pointer;
   z-index: 50;
   display: inline-block;
+  width: 100%; /* Added to ensure full width */
 }
 
 .pin-perspective-wrapper {
@@ -25,13 +26,16 @@
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
-  border-radius: 0.4rem; /* 16px */
+  border-radius: 0.4rem;
   background-color: black;
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
-  transition: border-color 0.7s ease;
+  transition: border-color 0.7s ease, transform 0.7s ease; /* Added transform transition */
   overflow: hidden;
   transform-style: preserve-3d;
+  /* CRITICAL FIX: Ensure the container respects its content size */
+  width: max-content;
+  height: max-content;
 }
 
 .pin-container:hover .pin-content-container {
@@ -41,12 +45,16 @@
 .pin-content-inner {
   position: relative;
   z-index: 50;
+  /* CRITICAL FIX: Ensure inner content maintains dimensions */
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 .pin-perspective-overlay {
   pointer-events: none;
-  width: 24rem;  /* 384px */
-  height: 20rem; /* 320px */
+  width: 24rem;
+  height: 20rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -62,7 +70,7 @@
 .pin-perspective-overlay-inner {
   width: 100%;
   height: 100%;
-  margin-top: -1.75rem; /* -28px */
+  margin-top: -1.75rem;
   position: relative;
   inset: 0;
 }
@@ -83,7 +91,7 @@
   gap: 0.5rem;
   align-items: center;
   z-index: 10;
-  border-radius: 9999px; /* rounded-full */
+  border-radius: 9999px;
   background-color: #18181b;
   padding: 0.125rem 1rem;
   box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1);
@@ -115,7 +123,7 @@
 }
 
 .pin-container:hover .pin-link-underline {
-    opacity: 0.4;
+  opacity: 0.4;
 }
 
 .pin-circle-perspective-wrapper {
@@ -135,7 +143,7 @@
   height: 11.25rem;
   width: 11.25rem;
   border-radius: 50%;
-  background-color: rgba(2, 132, 199, 0.08); /* sky-500/[0.08] */
+  background-color: rgba(2, 132, 199, 0.08);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
 }
 
@@ -144,22 +152,22 @@
   right: 50%;
   bottom: 50%;
   width: 1px;
-  height: 5rem; /* h-20 */
-  background: linear-gradient(to bottom, transparent, #06b6d4); /* cyan-500 */
+  height: 5rem;
+  background: linear-gradient(to bottom, transparent, #06b6d4);
   transform: translateY(14px);
   transition: height 0.3s ease;
 }
 
 .pin-container:hover .pin-line {
-    height: 10rem; /* group-hover:h-40 */
+  height: 10rem;
 }
 
 .blurred-line {
-    filter: blur(2px);
+  filter: blur(2px);
 }
 
 .sharp-line {
-    filter: none;
+  filter: none;
 }
 
 .pin-dot {
@@ -174,7 +182,7 @@
 .big-dot {
   width: 4px;
   height: 4px;
-  background-color: #0891b2; /* cyan-600 */
+  background-color: #0891b2;
   filter: blur(3px);
   transform: translateY(14px) translateX(1.5px);
 }
@@ -182,6 +190,6 @@
 .small-dot {
   width: 2px;
   height: 2px;
-  background-color: #67e8f9; /* cyan-300 */
+  background-color: #67e8f9;
   transform: translateY(14px) translateX(0.5px);
 }
