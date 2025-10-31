@@ -4,8 +4,10 @@
   position: relative;
   cursor: pointer;
   z-index: 50;
-  display: inline-block;
-  width: 100%; /* Added to ensure full width */
+  display: block;
+  width: 100%;
+  min-width: 380px; /* Ensure minimum width */
+  min-height: 500px; /* Ensure minimum height */
 }
 
 .pin-perspective-wrapper {
@@ -20,10 +22,13 @@
 
 .pin-content-container {
   position: absolute;
-  /* position: relative; */
   left: 50%;
   top: 50%;
-  height: 100%;
+  transform: translateX(-50%) translateY(-50%);
+  min-width: 350px;
+  width: auto;
+  min-height: 450px;
+  height: auto;
   padding: 0.6rem;
   display: flex;
   justify-content: flex-start;
@@ -32,12 +37,9 @@
   background-color: black;
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
-  transition: border-color 0.7s ease, transform 0.7s ease; /* Added transform transition */
+  transition: border-color 0.7s ease, transform 0.7s ease;
   overflow: hidden;
   transform-style: preserve-3d;
-  /* CRITICAL FIX: Ensure the container respects its content size */
-  width: max-content;
-  height: max-content;
 }
 
 .pin-container:hover .pin-content-container {
