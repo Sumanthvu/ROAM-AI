@@ -93,14 +93,17 @@
 }
 
 .saved-trips-grid > div {
-  /* REMOVED height: 400px; */
-  width: 380px;
+  /* REMOVED fixed height */
+  /* height: 400px; */
+  width: 100%;
+  max-width: 380px;
+  min-height: 500px; /* Added min-height to ensure proper spacing */
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start; /* Changed from center to flex-start */
   cursor: pointer;
-  /* ADD a perspective here to help the browser */
-  perspective: 1000px;
+  top: 3rem;
+  position: relative; /* Added for proper positioning context */
 }
 
 .no-trips-message {
