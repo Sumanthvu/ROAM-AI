@@ -19,8 +19,7 @@
 }
 
 .pin-content-container {
-  /* position: absolute; */
-  position: relative;
+  position: absolute;
   left: 50%;
   top: 50%;
   height: 100%;
