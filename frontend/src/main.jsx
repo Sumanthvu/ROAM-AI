@@ -7,7 +7,7 @@ import "./index.css";
 
 import HomePage from "./pages/HomePage.jsx";
 import AuthPage from "./pages/AuthPage.jsx";
-import DashboardPage from "./pages/DashBoardPage.jsx";
+import DashboardPage from "./pages/DashboardPage.jsx";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage.jsx";
 import ResetPasswordPage from "./pages/ResetPasswordPage.jsx";
 import ProfilePage from "./pages/ProfilePage.jsx";
