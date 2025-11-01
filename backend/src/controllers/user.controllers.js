@@ -335,7 +335,18 @@ const sendOtpForRegistration = asyncHandler(async (req, res) => {
     password: password,
     coverImage: coverImage?.url || "",
     otp,
+    timestamp: Date.now(),
   };
+
+  // Explicitly save the session before sending response
+  await new Promise((resolve, reject) => {
+    req.session.save((err) => {
+      if (err) reject(err);
+      else resolve();
+    });
+  });
+
+  console.log("Session saved successfully:", req.session.id);
 
   await sendEmail(email, "Verify Your Email", `Your OTP is: ${otp}`);
 
@@ -346,6 +357,9 @@ const sendOtpForRegistration = asyncHandler(async (req, res) => {
 
 const verifyOtpAndRegister = asyncHandler(async (req, res) => {
   const { otp } = req.body;
+
+  console.log("Session ID on verify:", req.session.id);
+  console.log("Session data:", req.session.registrationData);
 
   const registrationData = req.session.registrationData;
 
@@ -366,6 +380,7 @@ const verifyOtpAndRegister = asyncHandler(async (req, res) => {
     isEmailVerified: true,
   });
 
+  // Clear the session data after successful registration
   req.session.registrationData = null;
 
   return res

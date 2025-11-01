@@ -40,12 +40,12 @@ app.use(
     session({
         secret:process.env.SESSION_SECRET,
         resave:false,
-        saveUninitialized:false,
+        saveUninitialized:true,
         cookie:{
-            maxAge:10*60*1000,
+            maxAge: 15*60*1000, // 15 minutes
             httpOnly:true,
-            secure: true,
-            sameSite: "None"
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: process.env.NODE_ENV === 'production' ? "None" : "Lax"
         }
     })
 )
