@@ -1,7 +1,8 @@
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-import session from "express-session"
+import session from "express-session";
+import MongoStore from "connect-mongo";
 
 const app = express();
 
@@ -38,12 +39,17 @@ app.use(cookieParser());
 
 app.use(
     session({
-        secret:process.env.SESSION_SECRET,
-        resave:false,
-        saveUninitialized:true,
-        cookie:{
-            maxAge: 15*60*1000, // 15 minutes
-            httpOnly:true,
+        secret: process.env.SESSION_SECRET,
+        resave: false,
+        saveUninitialized: true,
+        store: MongoStore.create({
+            mongoUrl: process.env.MONGODB_URI,
+            collectionName: 'sessions',
+            ttl: 15 * 60, // 15 minutes in seconds
+        }),
+        cookie: {
+            maxAge: 15 * 60 * 1000, // 15 minutes
+            httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
             sameSite: process.env.NODE_ENV === 'production' ? "None" : "Lax"
         }
