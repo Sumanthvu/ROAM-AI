@@ -11,9 +11,20 @@ const app = express();
 
 //for cors
 //it says from which all ports/sites the request should be accepted
+const allowedOrigins = process.env.CORS_ORIGIN?.split(',') || ['http://localhost:5173'];
+
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN,
+    origin: function (origin, callback) {
+      // Allow requests with no origin (like mobile apps or curl requests)
+      if (!origin) return callback(null, true);
+      
+      if (allowedOrigins.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     credentials: true,
   })
 );
@@ -39,6 +50,7 @@ app.use(cookieParser());
 
 app.use(
     session({
+        name: 'roam.sid',
         secret: process.env.SESSION_SECRET,
         resave: false,
         saveUninitialized: true,
@@ -50,8 +62,8 @@ app.use(
         cookie: {
             maxAge: 15 * 60 * 1000, // 15 minutes
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: process.env.NODE_ENV === 'production' ? "None" : "Lax"
+            secure: true, // Always true since we're using HTTPS in production
+            sameSite: "None" // Required for cross-origin cookies
         }
     })
 )
