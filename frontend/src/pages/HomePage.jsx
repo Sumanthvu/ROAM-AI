@@ -10,16 +10,14 @@ import "./HomePage.css";
 import "../components/DynamicSections.css";
 
 const images = [
-  "img.png",
-  "/beach1.jpeg",
+  "img1.jpg",
   "/historic1.jpeg",
   "/road1.jpeg",
+  "/road2.jpg",
   "/trek1.jpg",
-  "/beach2.jpeg",
-  "/moun2.jpeg",
-  "/trek2.jpeg",
-  "/beach3.jpeg",
-  "/moun3.jpeg",
+  "/historic2.jpg",
+  "/historic4.jpg",
+  "/historic5.jpg",
 ];
 
 const howItWorksSteps = [

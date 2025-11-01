@@ -52,15 +52,15 @@ export const PinPerspective = ({ title = "", href = "" }) => {
     <div className="pin-perspective-overlay">
       <div className="pin-perspective-overlay-inner">
         <div className="pin-link-wrapper">
-          <a
-            href={href}
-            target="_blank"
-      rel="noopener noreferrer"
+          <div
+    //         href={href}
+    //         target="_blank"
+    //   rel="noopener noreferrer"
             className="pin-link"
           >
             <span className="pin-link-title">{title}</span>
             <span className="pin-link-underline"></span>
-          </a>
+          </div>
         </div>
 
         <div className="pin-circle-perspective-wrapper">
