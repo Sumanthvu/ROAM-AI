@@ -1,33 +1,29 @@
- import nodemailer from "nodemailer";
-  
-  const transporter = nodemailer.createTransport({
-    service: "gmail",
-    host: "smtp.gmail.com",
-    port: 587,
-    secure: false,
-    auth: {
-      user: process.env.SMTP_EMAIL, 
-      pass: process.env.SMTP_PASS,
-    },
-    connectionTimeout: 10000,
-    socketTimeout: 10000,
+ import * as brevo from '@getbrevo/brevo';
+
+// Initialize Brevo API client
+const apiInstance = new brevo.TransactionalEmailsApi();
+apiInstance.setApiKey(
+  brevo.TransactionalEmailsApiApiKeys.apiKey,
+  process.env.BREVO_API_KEY
+);
+
+export const sendEmail = async (to, sub, msg) => {
+  try {
+    const sendSmtpEmail = new brevo.SendSmtpEmail();
     
-  });
-  
-  export const sendEmail = (to, sub, msg) => {
-    transporter.sendMail(
-      {
-        from: "sumanthveslavath07@gmail.com", 
-        to: to,
-        subject: sub,
-        html: msg,
-      },
-      (err, info) => {
-        if (err) {
-          console.error("Error sending email:", err);
-        } else {
-          console.log("Email sent:", info.response);
-        }
-      }
-    );
-  };
+    sendSmtpEmail.subject = sub;
+    sendSmtpEmail.htmlContent = msg;
+    sendSmtpEmail.sender = { 
+      name: "ROAM AI", 
+      email: process.env.SMTP_EMAIL || "sumanthveslavath07@gmail.com" 
+    };
+    sendSmtpEmail.to = [{ email: to }];
+
+    const data = await apiInstance.sendTransacEmail(sendSmtpEmail);
+    console.log("Email sent successfully:", data);
+    return { success: true, data };
+  } catch (err) {
+    console.error("Error sending email:", err);
+    return { success: false, error: err.message };
+  }
+};
