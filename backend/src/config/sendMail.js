@@ -11,6 +11,7 @@
     },
     connectionTimeout: 10000,
     socketTimeout: 10000,
+    
   });
   
   export const sendEmail = (to, sub, msg) => {

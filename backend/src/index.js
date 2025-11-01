@@ -6,19 +6,25 @@ dotenv.config({
 import connectDB from "./db/index.js";
 import { app } from "./app.js";
 
-// app.get("/",(req,res)=>{
-//     res.send("Hey")
-// })
-
+// Connect to database
 connectDB()
   .then(() => {
-    app.listen(process.env.PORT || 3000, () => {
-      console.log(`Server is running at port : ${process.env.PORT}`);
-    });
+    console.log("Database connected successfully");
   })
   .catch((err) => {
-    console.log("Mongo DB connection failed ", error);
+    console.log("Mongo DB connection failed ", err);
   });
+
+// For local development
+if (process.env.NODE_ENV !== 'production') {
+  const PORT = process.env.PORT || 3000;
+  app.listen(PORT, () => {
+    console.log(`Server is running at port : ${PORT}`);
+  });
+}
+
+// Export for Vercel serverless
+export default app;
 
   
  
