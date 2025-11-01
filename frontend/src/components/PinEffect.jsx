@@ -24,12 +24,12 @@ export const PinContainer = ({
   };
 
   return (
-    <a
+    <div
       className={`pin-container ${containerClassName}`}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
-      href={href || "#"} // Changed to a default anchor
-      target="_blank"
+    //   href={href || "#"} // Changed to a default anchor
+    //   target="_blank"
       rel="noopener noreferrer"
     >
       <div className="pin-perspective-wrapper">
@@ -43,7 +43,7 @@ export const PinContainer = ({
         </div>
       </div>
       <PinPerspective title={title} href={href} />
-    </a>
+    </div>
   );
 };
 
