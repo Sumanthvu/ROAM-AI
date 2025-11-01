@@ -62,7 +62,7 @@ app.use(
         cookie: {
             maxAge: 15 * 60 * 1000, // 15 minutes
             httpOnly: true,
-            secure: true, // Always true since we're using HTTPS in production
+            secure: true, // Always true for HTTPS
             sameSite: "None" // Required for cross-origin cookies
         }
     })
