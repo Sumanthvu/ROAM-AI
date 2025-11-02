@@ -145,7 +145,7 @@ const ProfilePage = () => {
          <FloatingBackground />
         <div className="profile-avatar-wrapper" onClick={() => setIsAvatarModalOpen(true)}>
           <img 
-            src={user.coverImage || `data:image/jpeg;base64,...`} 
+            src={user.coverImage || "/default.png"} 
             alt={user.userName} 
             className="profile-avatar" 
           />
