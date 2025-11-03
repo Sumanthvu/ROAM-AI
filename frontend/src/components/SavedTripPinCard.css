@@ -1,101 +1,132 @@
-/* --- src/components/SavedTripPinCard.css --- */
+/* src/components/SavedTripPinCard.css */
 
-.pin-card-container {
-  width: 350px;
-  height: 420px;
-  background-color: #0F172A;
-  border-radius: 8px;
-  overflow: hidden;
+/* --- Keyframe for the subtle glow animation on hover --- */
+@keyframes glow {
+  0% {
+    box-shadow: 0 0 5px rgba(99, 102, 241, 0), 0 0 10px rgba(99, 102, 241, 0);
+  }
+  100% {
+    box-shadow: 0 0 15px rgba(99, 102, 241, 0.4), 0 0 25px rgba(99, 102, 241, 0.2);
+  }
+}
+
+.trip-card {
+  --card-width: 340px;
+  --card-height: 440px;
+
   position: relative;
+  width: var(--card-width);
+  height: var(--card-height);
+  background-color: #0F172A; /* Primary dark background (slate-900) */
+  border-radius: 12px;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-
-  border: 1px solid transparent;
-  background-image: linear-gradient(#0F172A, #0F172A), 
-                    linear-gradient(to bottom, #334155, #1e293b);
-  background-origin: border-box;
-  background-clip: content-box, border-box;
+  
+  /* A subtle gradient border for a premium feel */
+  border: 1px solid #334155; /* slate-700 */
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  
+  /* Smooth transitions for all hover effects */
+  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), 
+              box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+              border-color 0.4s ease;
 }
 
-.pin-card-container:hover {
-  transform: translateY(-8px); /* More pronounced lift on hover */
-  /* A more vibrant shadow that matches the accent color */
-  box-shadow: 0 20px 25px -5px rgba(99, 102, 241, 0.2), 0 10px 10px -5px rgba(99, 102, 241, 0.08);
+.trip-card:hover {
+  transform: translateY(-10px);
+  border-color: #4f46e5; /* A vibrant indigo for the hover border */
+  /* Using the glow animation for a more dynamic shadow */
+  animation: glow 0.8s forwards;
 }
 
-.pin-card-image {
-  height: 220px; /* Increased image height for more visual impact */
+.card-image {
+  height: 220px;
   width: 100%;
   background-size: cover;
   background-position: center;
   position: relative;
-  border-bottom: 2px solid #1e293b; /* Clean separator */
+  border-bottom: 2px solid #1e293b; /* slate-800 separator */
+  transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-.pin-card-image::after {
+.trip-card:hover .card-image {
+  transform: scale(1.05);
+}
+
+/* Gradient overlay to blend the image into the dark card content */
+.card-image::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(15, 23, 42, 0.6) 0%, transparent 50%);
+  background: linear-gradient(to top, rgba(15, 23, 42, 0.8) 0%, transparent 60%);
 }
 
-.pin-card-content {
-  padding: 1rem;
-  flex-grow: 1;
+.card-content {
+  padding: 1.25rem;
   display: flex;
   flex-direction: column;
-  /* The top accent border, now more integrated */
-  border-top: 4px solid #6366F1;
+  flex-grow: 1; /* This ensures the content fills the remaining space */
 }
 
-.pin-card-title {
-  font-size: 1.8rem; /* Slightly larger title */
+.card-title {
+  font-size: 1.6rem;
   font-weight: 700;
-  color: #E2E8F0;
-  margin: 0 0 1.75rem 0; /* Adjusted margin for better spacing */
+  color: #E2E8F0; /* Light gray text */
+  margin: 0 0 1rem 0;
   line-height: 1.2;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3); /* Improved legibility */
 }
 
-.pin-card-details {
+.card-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem; /* Space between detail items */
+  margin-top: auto; /* Pushes the details down */
+  padding: 1rem 0;
+  border-top: 1px solid #1e293b;
+}
+
+.detail-item {
   display: flex;
   justify-content: space-between;
-  text-align: left;
-  margin-top: auto;
-  padding-top: 1.25rem;
-  border-top: 1px solid #334155;
-  gap: 1rem; 
+  align-items: center;
+  font-size: 0.9rem;
 }
 
-.pin-card-detail-item {
-  display: flex;
-  flex-direction: column;
-}
-
-.detail-label {
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: #94A3B8;
-  text-transform: uppercase;
-  letter-spacing: 0.05em; /* Added for clarity */
-  margin-bottom: 0.35rem;
-}
-
-.detail-value {
-  font-size: 1rem;
+.detail-item span:first-child {
+  color: #94A3B8; /* Muted color for labels (slate-400) */
   font-weight: 500;
-  color: #E2E8F0;
+}
+
+.detail-item span:last-child {
+  color: #E2E8F0; /* Light color for values */
+  font-weight: 600;
   text-transform: capitalize;
 }
 
-.pin-card-delete-button {
+.card-footer {
+  padding-top: 1rem;
+  text-align: center;
+}
+
+.view-itinerary-link {
+  color: #94A3B8;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: color 0.3s ease, letter-spacing 0.3s ease;
+}
+
+.trip-card:hover .view-itinerary-link {
+  color: #c7d2fe; /* Light indigo on hover */
+  letter-spacing: 0.5px; /* Adds a nice touch */
+}
+
+.card-delete-button {
   position: absolute;
-  top: 16px;
-  right: 16px;
-  z-index: 10;
-  background-color: rgba(15, 23, 42, 0.7);
+  top: 12px;
+  right: 12px;
+  z-index: 20;
+  background-color: rgba(15, 23, 42, 0.7); /* slate-900 with transparency */
   color: #E2E8F0;
   border: 1px solid #334155;
   width: 32px;
@@ -103,18 +134,26 @@
   border-radius: 50%;
   font-size: 1.5rem;
   font-weight: bold;
-  cursor: pointer;
-  line-height: 30px;
+  line-height: 30px; /* Align the 'x' */
   display: flex;
   align-items: center;
   justify-content: center;
   backdrop-filter: blur(5px);
-  transition: all 0.2s ease-in-out;
+  
+  /* Initial hidden state */
+  opacity: 0;
+  transform: translateY(-10px) scale(0.9);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-.pin-card-delete-button:hover {
+.trip-card:hover .card-delete-button {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.card-delete-button:hover {
   background-color: #e53e3e;
   color: white;
-  transform: scale(1.1);
+  transform: scale(1.1) rotate(90deg);
   border-color: #c53030;
 }
