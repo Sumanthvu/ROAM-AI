@@ -97,10 +97,10 @@ const HomePage = () => {
               </Link>
             ) : (
               <>
-                <Link to="/signup" className="cta-button primary">
+                <Link to="/login" className="cta-button primary">
                   Get Started for Free
                 </Link>
-                <Link to="/signin" className="cta-button">
+                <Link to="/register" className="cta-button">
                   Sign In
                 </Link>
               </>
